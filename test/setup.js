@@ -1,6 +1,22 @@
 import { JSDOM } from 'jsdom';
+import { expect } from 'chai';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const jsdom = new JSDOM(`
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Tic Tac Toe</title>
+    </head>
+    <body>
+      <div id="app"></div>
+    </body>
+</html>`);
 const { window } = jsdom;
 
 function copyProps(src, target) {
@@ -21,4 +37,6 @@ global.requestAnimationFrame = function (callback) {
 global.cancelAnimationFrame = function (id) {
   clearTimeout(id);
 };
+global.expect = expect;
+
 copyProps(window, global);
