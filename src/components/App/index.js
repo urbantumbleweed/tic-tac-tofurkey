@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const App = () => {
-  return ( <div>Hello World</div> );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeTravel: false,
+    }
+  }
+  render() { 
+    return (
+      <div>
+        Hello World
+      </div> );
+  }
 }
  
 export default App;
