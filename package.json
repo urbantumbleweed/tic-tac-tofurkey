@@ -7,12 +7,15 @@
   "author": "Stephen Saunders <saunders.stephen@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server --open"
+    "start": "node_modules/.bin/webpack-dev-server --open --progress",
+    "test": "mocha 'src/**/*.spec.js'",
+    "test:watch": "mocha --require @babel/register --recursive --reporter min --watch 'src/**/*.spec.js'"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
+    "@babel/register": "^7.7.7",
     "babel": "^6.23.0",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
