@@ -5,6 +5,7 @@ import { act } from 'react-dom/test-utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './index';
+import { displayName } from './App.constants';
 
 describe('<App />', () => {
   let wrapper;
@@ -27,5 +28,17 @@ describe('<App />', () => {
     expect(initialGameState instanceof Array, '`state.history[0] ` is not an Array').to.be.true;
     expect(initialGameState.length).to.equal(9, '`state.history[0]` must have a length of 9');
     expect(initialGameState, '`state.history[0]` should initialize with null values').to.deep.equal(Array(9).fill(null))
+  })
+  describe('#render ', () => {
+    it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
+      const button = wrapper.find('.time-travel');
+      [true, false, true, false].forEach((expectedValue, index) => {
+        button.simulate('click');
+        expect(
+          wrapper.state().timeTravel,
+          `'state.timeTravel' should have toggled to ${expectedValue} after ${index + 1} 'click${index === 0 ? '' : 's'}'`)
+          .to.equal(expectedValue);
+      })
+    })
   })
 })
