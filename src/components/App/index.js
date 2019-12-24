@@ -5,6 +5,7 @@ class App extends Component {
     super(props);
     this.state = {
       timeTravel: false,
+      history: [],
     }
   }
   render() { 
