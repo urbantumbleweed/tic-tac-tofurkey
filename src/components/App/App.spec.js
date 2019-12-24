@@ -19,7 +19,8 @@ describe('<App />', () => {
     expect(timeTravel).to.be.a('boolean', '`state.timeTravel` is not Boolean')
     expect(timeTravel).to.be.false;
   })
-  it('has state with `timeTravel` that is a `Boolean`', () => {
-    expect(wrapper.state().timeTravel).to.equal(false);
+  it('initializes with `state.history` that is an Array', () => {
+    const history = wrapper.state().history;
+    expect(history instanceof Array).to.equal(true, '`state.history` is not an Array')
   })
 })
