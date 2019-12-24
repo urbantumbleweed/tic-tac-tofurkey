@@ -1,0 +1,9 @@
+{
+  "name": "gap-ttt",
+  "version": "0.0.1",
+  "description": "Take home assessment for Gap, Inc",
+  "main": "index.js",
+  "repository": "git@github.com:urbantumbleweed/gap-ttt.git",
+  "author": "Stephen Saunders <saunders.stephen@gmail.com>",
+  "license": "MIT"
+}
