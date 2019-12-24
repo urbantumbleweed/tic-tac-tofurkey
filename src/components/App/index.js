@@ -7,11 +7,22 @@ class App extends Component {
       timeTravel: false,
       history: [Array(9).fill(null)],
     }
+    this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
   }
+
+  toggleTimeTravel(e) {
+    e.preventDefault();
+    this.setState(state => 
+      ({ timeTravel: !state.timeTravel}))
+  }
+
   render() { 
     return (
       <div>
-        Hello World
+        <button
+          onClick={this.toggleTimeTravel}
+          className="time-travel"
+        ></button>
       </div> );
   }
 }
