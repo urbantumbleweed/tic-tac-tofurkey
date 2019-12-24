@@ -19,8 +19,13 @@ describe('<App />', () => {
     expect(timeTravel).to.be.a('boolean', '`state.timeTravel` is not Boolean')
     expect(timeTravel).to.be.false;
   })
-  it('initializes with `state.history` that is an Array', () => {
+  it('initializes with `state.history` that is an Array of Arrays', () => {
     const history = wrapper.state().history;
-    expect(history instanceof Array).to.equal(true, '`state.history` is not an Array')
+    expect(history instanceof Array, '`state.history` is not an Array').to.true
+    expect(history.length, '`state.history` should initialize with one inner Array').to.equal(1);
+    const initialGameState = history[0];
+    expect(initialGameState instanceof Array, '`state.history[0] ` is not an Array').to.be.true;
+    expect(initialGameState.length).to.equal(9, '`state.history[0]` must have a length of 9');
+    expect(initialGameState, '`state.history[0]` should initialize with null values').to.deep.equal(Array(9).fill(null))
   })
 })
