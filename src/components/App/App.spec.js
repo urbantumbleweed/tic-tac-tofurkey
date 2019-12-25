@@ -24,14 +24,16 @@ describe('<App />', () => {
       expect(timeTravel).to.be.a('boolean', '`state.timeTravel` is not Boolean')
       expect(timeTravel).to.be.false;
     })
-    it('initializes with `state.history` that is an Array of Arrays', () => {
-      const history = wrapper.state().history;
-      expect(history instanceof Array, '`state.history` is not an Array').to.true
-      expect(history.length, '`state.history` should initialize with one inner Array').to.equal(1);
-      const initialGameState = history[0];
-      expect(initialGameState instanceof Array, '`state.history[0] ` is not an Array').to.be.true;
-      expect(initialGameState.length).to.equal(9, '`state.history[0]` must have a length of 9');
-      expect(initialGameState, '`state.history[0]` should initialize with null values').to.deep.equal(Array(9).fill(null))
+    it(' initializes with `state.moves` that is an Array', () => {
+      const moves = wrapper.state().moves;
+      expect(moves instanceof Array, '`state.moves` is not an Array').to.true
+      expect(moves.length, '`state.moves` should initialize with no moves').to.equal(0);
+    })
+    it(' initializes with `state.game` that is an Array', () => {
+      const game = wrapper.state().game;
+      expect(game instanceof Array, '`state.game` is not an Array').to.true;
+      expect(game.length, '`state.game` must initialize with a length of 9').to.equal(9);
+      expect(game, '`state.game` should initialize with null values').to.deep.equal(Array(9).fill(null));
     })
     it(' initilizes with `state.turnX` set to true', () => {
       const turnX = wrapper.state().turnX;
