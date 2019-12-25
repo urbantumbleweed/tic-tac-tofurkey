@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       timeTravel: false,
       history: [Array(9).fill(null)],
+      turnX: true,
     }
     this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
   }
