@@ -8,7 +8,8 @@ class App extends Component {
     super(props);
     this.state = {
       timeTravel: false,
-      history: [Array(9).fill(null)],
+      game: Array(9).fill(null),
+      moves: [],
       turnX: true,
     }
     this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
@@ -22,8 +23,7 @@ class App extends Component {
 
   render() {
     const suffix = this.state.timeTravel ? 'on' : 'off';
-    const currentGameIndex = this.state.history.length - 1;
-    const currentGame = this.state.history[currentGameIndex];
+    const currentMove = this.state.moves.length;
     return (
       <div className="app">
         <h1 className="appHeader">Tic Tac Tofurkey</h1>
