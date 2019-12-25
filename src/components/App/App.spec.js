@@ -5,7 +5,6 @@ import { act } from 'react-dom/test-utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './index';
-import { displayName } from './App.constants';
 
 describe('<App />', () => {
   let wrapper;
@@ -31,11 +30,14 @@ describe('<App />', () => {
   })
   describe('#render ', () => {
     let button;
+    let Game;
     beforeEach(() => {
       button = wrapper.find('.time-travel');
+      Game = wrapper.find('.gameboard');
     })
     afterEach(() => {
       button = null;
+      Game = null;
     })
     it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
       [true, false, true, false].forEach((expectedValue, index) => {
@@ -52,6 +54,9 @@ describe('<App />', () => {
         expect(button.text()).to.contain(suffix);
         button.simulate('click');
       })
+    })
+    it('displays a <Game /> component', () => {
+      expect(Game.type(), '<Game /> is a div').to.equal('div')
     })
   })
 })
