@@ -35,11 +35,6 @@ describe('<App />', () => {
       expect(game.length, '`state.game` must initialize with a length of 9').to.equal(9);
       expect(game, '`state.game` should initialize with null values').to.deep.equal(Array(9).fill(null));
     })
-    it(' initilizes with `state.turnX` set to true', () => {
-      const turnX = wrapper.state().turnX;
-      expect(typeof turnX, '`turnX` should be a Boolean').to.equal('boolean')
-      expect(turnX, 'X should start the game').to.be.true;
-    })
   })
   describe('#render ', () => {
     let button;

@@ -10,7 +10,6 @@ class App extends Component {
       timeTravel: false,
       game: Array(9).fill(null),
       moves: [],
-      turnX: true,
     }
     this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
   }
@@ -24,6 +23,7 @@ class App extends Component {
   render() {
     const suffix = this.state.timeTravel ? 'on' : 'off';
     const currentMove = this.state.moves.length;
+    const isTurnX = currentMove % 2 === 0;
     return (
       <div className="app">
         <h1 className="appHeader">Tic Tac Tofurkey</h1>
