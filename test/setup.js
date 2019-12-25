@@ -1,8 +1,12 @@
+import path from 'path';
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
+
+process.env.NODE_PATH = path.join(__dirname, '..', 'src');
+require('module').Module._initPaths();
 
 const jsdom = new JSDOM(`
 <!DOCTYPE html>
