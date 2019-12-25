@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { expect } from 'chai';
+import { spy } from 'sinon';
 import { act } from 'react-dom/test-utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -8,11 +9,14 @@ import App from './index';
 
 describe('<App />', () => {
   let wrapper;
+  let toggleTimeTravelSpy;
   beforeEach(() => {
+    toggleTimeTravelSpy = spy(App.prototype, 'toggleTimeTravel');
     wrapper = mount(<App />);
   })
   afterEach(() => {
     wrapper.unmount();
+    toggleTimeTravelSpy.restore();
   })
   it('initializes with `state.timeTravel` that is `false`', () => {
     const timeTravel = wrapper.state().timeTravel;
@@ -40,20 +44,26 @@ describe('<App />', () => {
       Game = null;
     })
     it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
-      [true, false, true, false].forEach((expectedValue, index) => {
+      const expectedValues = [true, false, true, false];
+      expectedValues.forEach((expectedValue, index) => {
         button.simulate('click');
         expect(
           wrapper.state().timeTravel,
           `'state.timeTravel' should have toggled to ${expectedValue} after ${index + 1} 'click${index === 0 ? '' : 's'}'`)
           .to.equal(expectedValue);
+        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', index + 1);
       })
+      expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
     })
     it(' `Time Travel` button is denoted as `on` or `off`', () => {
       expect(button.text()).to.contain('Time Travel:');
-      ['off', 'on', 'off', 'on'].forEach((suffix, i) => {
+      const expectedValues = ['off', 'on', 'off', 'on'];
+      expectedValues.forEach((suffix, i) => {
         expect(button.text()).to.contain(suffix);
         button.simulate('click');
+        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', i + 1);
       })
+      expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
     })
     it('displays a <Game /> component', () => {
       expect(Game.type(), '<Game /> is a div').to.equal('div')
