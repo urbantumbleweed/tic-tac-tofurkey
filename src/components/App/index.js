@@ -16,13 +16,16 @@ class App extends Component {
       ({ timeTravel: !state.timeTravel}))
   }
 
-  render() { 
+  render() {
+    const suffix = this.state.timeTravel ? 'on' : 'off';
     return (
       <div>
         <button
           onClick={this.toggleTimeTravel}
           className="time-travel"
-        ></button>
+        >
+          {`Time Travel: ${suffix}`}
+        </button>
       </div> );
   }
 }
