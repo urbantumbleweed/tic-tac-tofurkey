@@ -30,14 +30,27 @@ describe('<App />', () => {
     expect(initialGameState, '`state.history[0]` should initialize with null values').to.deep.equal(Array(9).fill(null))
   })
   describe('#render ', () => {
+    let button;
+    beforeEach(() => {
+      button = wrapper.find('.time-travel');
+    })
+    afterEach(() => {
+      button = null;
+    })
     it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
-      const button = wrapper.find('.time-travel');
       [true, false, true, false].forEach((expectedValue, index) => {
         button.simulate('click');
         expect(
           wrapper.state().timeTravel,
           `'state.timeTravel' should have toggled to ${expectedValue} after ${index + 1} 'click${index === 0 ? '' : 's'}'`)
           .to.equal(expectedValue);
+      })
+    })
+    it(' `Time Travel` button is denoted as `on` or `off`', () => {
+      expect(button.text()).to.contain('Time Travel:');
+      ['off', 'on', 'off', 'on'].forEach((suffix, i) => {
+        expect(button.text()).to.contain(suffix);
+        button.simulate('click');
       })
     })
   })
