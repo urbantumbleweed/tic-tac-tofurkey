@@ -46,6 +46,9 @@ describe('<App />', () => {
       Game = null;
       Prompt = null;
     })
+    it( ' displays a header', () => {
+      expect(wrapper.find('.appHeader').text()).to.equal('Tic Tac Tofurkey')
+    })
     it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
       const expectedValues = [true, false, true, false];
       expectedValues.forEach((expectedValue, index) => {
