@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Game from '../Game';
+import Prompt from '../Prompt';
+import 'src/styles.scss';
 
 class App extends Component {
   constructor(props) {

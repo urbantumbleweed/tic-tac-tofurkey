@@ -1,0 +1,71 @@
+/* Coolors Exported Palette - coolors.co/a31621-fcf7f8-ced3dc-4e8098-90c2e7 */
+
+/* HSL */
+$color1: hsla(355%, 76%, 36%, 1);
+$color2: hsla(348%, 45%, 98%, 1);
+$color3: hsla(219%, 17%, 84%, 1);
+$color4: hsla(199%, 32%, 45%, 1);
+$color5: hsla(206%, 64%, 74%, 1);
+
+/* RGB */
+$color1: rgba(163, 22, 33, 1);
+$color2: rgba(252, 247, 248, 1);
+$color3: rgba(206, 211, 220, 1);
+$color4: rgba(78, 128, 152, 1);
+$color5: rgba(144, 194, 231, 1);
+
+$color1-light: rgba(229, 191, 194, 1);
+$color2-light: rgba(254, 252, 253, 1);
+$color3-light: rgba(241, 243, 245, 1);
+$color4-light: rgba(206, 220, 226, 1);
+$color5-light: rgba(224, 238, 248, 1);
+
+$color1-dark: rgba(45, 6, 9, 1);
+$color2-dark: rgba(69, 68, 68, 1);
+$color3-dark: rgba(57, 58, 60, 1);
+$color4-dark: rgba(22, 35, 42, 1);
+$color5-dark: rgba(40, 53, 63, 1);
+
+$text: $color4-dark;
+
+html, body, #app, .app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color3-light;
+  font-family: "Helvetica Neue", "Open Sans", "Sans";
+}
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: 2rem 3rem auto 3rem;
+  width: 600px;
+  height: 600px;
+  border: .5px solid $color3;
+}
+
+.appHeader {
+  font-size: 16px;
+  font-weight: 300;
+  text-align: right;
+  color: $color5-dark;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.promptContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  font-size: 2rem;
+  color: $text;
+  background-color: $color4-light;
+  text-transform: capitalize;
+  width: 100%;
+  height: 100%
+}
