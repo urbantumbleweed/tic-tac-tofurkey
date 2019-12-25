@@ -19,6 +19,8 @@ class App extends Component {
 
   render() {
     const suffix = this.state.timeTravel ? 'on' : 'off';
+    const currentGameIndex = this.state.history.length - 1;
+    const currentGame = this.state.history[currentGameIndex];
     return (
       <div>
         <button
@@ -27,7 +29,7 @@ class App extends Component {
         >
           {`Time Travel: ${suffix}`}
         </button>
-        <Game />
+        <Game game={currentGame} />
       </div> );
   }
 }
