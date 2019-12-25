@@ -65,12 +65,12 @@ describe('<App />', () => {
       })
       expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
     })
-    it('displays a <Game /> component', () => {
+    it(' displays a <Game /> component', () => {
       expect(Game.type(), '<Game /> is a div').to.equal('div')
     })
-    it(' passes a `game` array to the Game component', () => {
+    it(' passes a `game` array to the Game and renders 9 children', () => {
       const gameProps = Game.props();
-      expect(gameProps.game instanceof Array, '`game` is an Array').to.be.true
+      expect(gameProps.children.length, 'Game has 9 children').to.equal(9)
     })
   })
 })
