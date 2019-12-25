@@ -35,13 +35,16 @@ describe('<App />', () => {
   describe('#render ', () => {
     let button;
     let Game;
+    let Prompt
     beforeEach(() => {
       button = wrapper.find('.time-travel');
       Game = wrapper.find('.gameboard');
+      Prompt = wrapper.find('.prompt')
     })
     afterEach(() => {
       button = null;
       Game = null;
+      Prompt = null;
     })
     it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
       const expectedValues = [true, false, true, false];
@@ -71,6 +74,9 @@ describe('<App />', () => {
     it(' passes a `game` array to the Game and renders 9 children', () => {
       const gameProps = Game.props();
       expect(gameProps.children.length, 'Game has 9 children').to.equal(9)
+    })
+    it(' displays a <Prompt />', () => {
+      expect(Prompt.type()).to.equal('div')
     })
   })
 })
