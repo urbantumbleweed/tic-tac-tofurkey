@@ -24,6 +24,8 @@ class App extends Component {
     const currentGameIndex = this.state.history.length - 1;
     const currentGame = this.state.history[currentGameIndex];
     return (
+      <div className="app">
+        <h1 className="appHeader">Tic Tac Tofurkey</h1>
       <div>
         <button
           onClick={this.toggleTimeTravel}
