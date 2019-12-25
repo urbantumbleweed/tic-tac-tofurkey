@@ -68,5 +68,9 @@ describe('<App />', () => {
     it('displays a <Game /> component', () => {
       expect(Game.type(), '<Game /> is a div').to.equal('div')
     })
+    it(' passes a `game` array to the Game component', () => {
+      const gameProps = Game.props();
+      expect(gameProps.game instanceof Array, '`game` is an Array').to.be.true
+    })
   })
 })
