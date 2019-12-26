@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import validOptions from 'src/constants/validOptions'
+import GameContext from 'contexts/GameContext';
 
 class Square extends Component {
   render() { 
     return (
-      <div className="square">
-        {this.props.value}
-      </div>
+      <GameContext.Consumer>
+        {({ makeMove, timeTravel}) => (
+          <div className="square" onClick={() => makeMove(this.props.index)}>
+            {this.props.value}
+          </div>
+        )}
+      </GameContext.Consumer>
     );
   }
 }

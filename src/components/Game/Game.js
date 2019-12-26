@@ -14,6 +14,7 @@ const Game = ({ game }) => {
           <Square
             key={index}
             value={value}
+            index={index}
           />
         ))
       }
