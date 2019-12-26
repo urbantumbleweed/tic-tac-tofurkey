@@ -73,6 +73,9 @@ describe('<App />', () => {
     it( ' displays a header', () => {
       expect(wrapper.find('.appHeader').text()).to.equal('Tic Tac Tofurkey')
     })
+    it(' displays an actions container where TimeTravel button lives', () => {
+      expect(wrapper.find('.actions').children.length).to.be.equal(1);
+    })
     it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
       const expectedValues = [true, false, true, false];
       expectedValues.forEach((expectedValue, index) => {
