@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Game from '../Game';
 import Prompt from '../Prompt';
 import 'src/styles.scss';
+import { promptMap } from './App.helpers';
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class App extends Component {
     const suffix = this.state.timeTravel ? 'on' : 'off';
     const currentMove = this.state.moves.length;
     const isTurnX = currentMove % 2 === 0;
+    const winner = this.state.winner;
     return (
       <div className="app">
         <h1 className="appHeader">Tic Tac Tofurkey</h1>
