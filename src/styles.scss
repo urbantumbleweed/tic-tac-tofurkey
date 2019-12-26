@@ -93,6 +93,11 @@ html, body, #app, .app {
 
 .square {
   background-color: $color2-light;
+  font-size: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 200;
   &:hover {
     background-color: $color2;
   }
