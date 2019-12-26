@@ -3,22 +3,28 @@ import ReactDOM from 'react-dom';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { act } from 'react-dom/test-utils';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
+
 import App from './index';
 import { validMessages } from './App.constants';
 import { promptMap } from './App.helpers';
+import gameCombinator from 'test/gameCombinator';
+
+const gameCombinations = gameCombinator();
 
 describe('<App />', () => {
   let wrapper;
   let toggleTimeTravelSpy;
+  let clearGameSpy;
   beforeEach(() => {
     toggleTimeTravelSpy = spy(App.prototype, 'toggleTimeTravel');
+    clearGameSpy = spy(App.prototype, 'clearGame');
     wrapper = mount(<App />);
   })
   afterEach(() => {
     wrapper.unmount();
     toggleTimeTravelSpy.restore();
+    clearGameSpy.restore();
   })
   describe(' helpers', () => {
     it(' `#promptMap()` is a function that returns strings', () => {
@@ -60,15 +66,18 @@ describe('<App />', () => {
     let button;
     let Game;
     let Prompt
+    let ClearButton;
     beforeEach(() => {
       button = wrapper.find('.time-travel');
       Game = wrapper.find('.gameboard');
-      Prompt = wrapper.find('.promptContainer')
+      Prompt = wrapper.find('.promptContainer');
+      ClearButton = wrapper.find('ClearGame');
     })
     afterEach(() => {
       button = null;
       Game = null;
       Prompt = null;
+      ClearButton = null;
     })
     it( ' displays a header', () => {
       expect(wrapper.find('.appHeader').text()).to.equal('Tic Tac Tofurkey')
@@ -110,6 +119,26 @@ describe('<App />', () => {
     })
     it(' passes a `message` to be rendered by Prompt', () => {
       expect(validMessages.includes(Prompt.text()), 'Prompt does not have a valid message').to.be.true;
+    })
+    it(' `Clear Game` component that when clicked, reinitializes `game` and `moves`', () => {
+      const existingGame = gameCombinations[800].slice();
+      const existingMoves = existingGame.reduce((acc, move, i) => {
+        if (move) {
+          acc.push(i);
+        }
+        return acc;
+      }, [])
+      wrapper.setState({
+        game: existingGame,
+        moves: existingMoves
+      })
+      expect(wrapper.state().game, `pre-state of 'game' should be ${existingGame.toString()}`).to.deep.equal(existingGame)
+      expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
+      ClearButton.simulate('click');
+      const { game, moves } = wrapper.state();
+      expect(game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
+      expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
+      expect(App.prototype.clearGame).to.have.property('callCount', 1)
     })
   })
 })
