@@ -6,6 +6,8 @@ import { act } from 'react-dom/test-utils';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './index';
+import { validMessages } from './App.constants';
+import { promptMap } from './App.helpers';
 
 describe('<App />', () => {
   let wrapper;
@@ -17,6 +19,24 @@ describe('<App />', () => {
   afterEach(() => {
     wrapper.unmount();
     toggleTimeTravelSpy.restore();
+  })
+  describe(' helpers', () => {
+    it(' `#promptMap()` is a function that returns strings', () => {
+      expect(typeof promptMap).to.equal('function')
+      expect(promptMap(), 'should return an empty string if called with no args').to.equal('');
+      for (let move = 0; move < 9; move++) {
+        if (move % 2 === 0) {
+          expect(
+            promptMap(move),
+            `If it is X's turn, the message should be '${validMessages[0]}'`
+            ).to.equal(validMessages[0])
+        } else {
+          expect(
+            promptMap(move),
+            `If it is O's turn, the message should be '${validMessages[1]}'`
+            ).to.equal(validMessages[1])
+        }
+      }
   })
   describe(' state', () => {
     it(' initializes with `state.timeTravel` that is `false`', () => {
@@ -43,7 +63,7 @@ describe('<App />', () => {
     beforeEach(() => {
       button = wrapper.find('.time-travel');
       Game = wrapper.find('.gameboard');
-      Prompt = wrapper.find('.prompt')
+      Prompt = wrapper.find('.promptContainer')
     })
     afterEach(() => {
       button = null;
@@ -82,7 +102,7 @@ describe('<App />', () => {
       const gameProps = Game.props();
       expect(gameProps.children.length, 'Game has 9 children').to.equal(9)
     })
-    it(' displays a <Prompt />', () => {
+    it(' displays a <Prompt /> component', () => {
       expect(Prompt.type()).to.equal('div')
     })
   })
