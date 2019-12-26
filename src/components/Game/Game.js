@@ -1,6 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Game = ({ game }) => {
+  if (!game) {
+    return null;
+  }
   return (
     <div className="gameboard">
       {
@@ -12,4 +16,7 @@ const Game = ({ game }) => {
   );
 }
 
+Game.propTypes = {
+  game: PropTypes.array.isRequired,
+}
 export default Game;
