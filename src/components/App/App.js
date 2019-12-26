@@ -32,7 +32,9 @@ class App extends Component {
         <h1 className="appHeader">Tic Tac Tofurkey</h1>
         <Prompt message={promptMap(currentMove, winner)} />
         <Game game={this.state.game} />
-        <TimeTravelButton onClick={this.toggleTimeTravel} suffix={suffix} />
+        <div className="actions">
+          <TimeTravelButton onClick={this.toggleTimeTravel} suffix={suffix} />
+        </div>
       </div> );
   }
 }
