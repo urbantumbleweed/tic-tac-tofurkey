@@ -1,5 +1,3 @@
-const assert = require("assert");
-
 const LENGTH = 9;
 
 export default function gameCombinator(length = LENGTH) {
