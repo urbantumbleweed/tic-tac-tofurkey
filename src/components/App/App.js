@@ -35,6 +35,9 @@ class App extends Component {
   }
 
   makeMove(i) {
+    if (this.state.game[i] !== null) {
+      return;
+    }
     this.setState(state => {
       const newGame = state.game.slice();
       const player = state.moves.length % 2 === 0 ? 'X' : 'O';
