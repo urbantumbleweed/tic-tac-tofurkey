@@ -3,6 +3,7 @@ import Game from '../Game';
 import Prompt from '../Prompt';
 import 'src/styles.scss';
 import { promptMap } from './App.helpers';
+import TimeTravelButton from '../TimeTravelButton';
 
 class App extends Component {
   constructor(props) {
@@ -31,12 +32,7 @@ class App extends Component {
         <h1 className="appHeader">Tic Tac Tofurkey</h1>
         <Prompt message={promptMap(currentMove, winner)} />
         <Game game={this.state.game} />
-        <button
-          onClick={this.toggleTimeTravel}
-          className="time-travel"
-        >
-          {`Time Travel: ${suffix}`}
-        </button>
+        <TimeTravelButton onClick={this.toggleTimeTravel} suffix={suffix} />
       </div> );
   }
 }
