@@ -11,6 +11,15 @@ import { promptMap } from './App.helpers';
 import gameCombinator from 'test/gameCombinator';
 
 const gameCombinations = gameCombinator();
+const someCompleteGames = [];
+for (let i = 0; i < gameCombinations.length; i++) {
+  if (!gameCombinations[i].includes(null)) {
+    someCompleteGames.push(gameCombinations[i].slice())
+    if (someCompleteGames.length > 4) {
+      break;
+    } 
+  }
+}
 
 describe('<App />', () => {
   let wrapper;
@@ -138,6 +147,29 @@ describe('<App />', () => {
       const { game, moves } = wrapper.state();
       expect(game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
       expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
+      expect(App.prototype.clearGame).to.have.property('callCount', 1)
+    })
+    it('`Clear Game` clears the `state.winner` if one is defined', () => {
+      let existingGame = someCompleteGames[0].slice();
+      const existingMoves = existingGame.reduce((acc, move, i) => {
+        if (move) {
+          acc.push(i);
+        }
+        return acc;
+      }, [])
+      wrapper.setState({
+        winner: 'X',
+        game: existingGame,
+        moves: existingMoves,
+      })
+      expect(wrapper.state().winner, `pre-state of 'winner' `).to.equal('X');
+      expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
+      expect(wrapper.state().winner, `pre-state of 'winner' should be 'X'`).to.equal('X')
+      ClearButton.simulate('click');
+      const { game, moves, winner } = wrapper.state();
+      expect(game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
+      expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
+      expect(winner, '`state.winner` should reinitialize to `null`').to.be.null;
       expect(App.prototype.clearGame).to.have.property('callCount', 1)
     })
   })
