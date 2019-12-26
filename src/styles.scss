@@ -43,10 +43,12 @@ html, body, #app, .app {
 
 .app {
   display: grid;
-  grid-template-rows: 2rem 3rem auto 3rem;
+  grid-template-rows: 2.5rem 3rem auto 3rem;
   width: 600px;
   height: 600px;
   border: .5px solid $color3;
+  border-radius: 2px;
+  box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.2);
 }
 
 .appHeader {
@@ -55,6 +57,7 @@ html, body, #app, .app {
   text-align: right;
   color: $color5-dark;
   padding: 0 1rem 1rem 1rem;
+  line-height: 1.2rem;
 }
 
 .promptContainer {
@@ -69,5 +72,28 @@ html, body, #app, .app {
   height: 100%;
   &::first-letter {
     text-transform: capitalize;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-rows: repeat(3, 33%);
+  grid-template-columns: repeat(3, 33%);
+  grid-row-gap: 2px;
+  grid-column-gap: 2px;
+  background-color: $color3;
+  justify-content: space-between;
+}
+
+.square {
+  background-color: $color2-light;
+  &:hover {
+    background-color: $color2;
   }
 }
