@@ -17,5 +17,10 @@ describe('<Game />', () => {
       wrapper = mount(<Game />);
       expect(wrapper.isEmptyRender()).to.be.true
     })
+    it(' mounts a div that has a class `gameboard`', () => {
+      const game = gameCombinations.slice(0,1);
+      wrapper = mount(<Game game={gameCombinations[0]} />);
+      expect(wrapper.find('.gameboard').exists()).to.be.true;
+    })
   })
 })
