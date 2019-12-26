@@ -212,8 +212,20 @@ describe('<App />', () => {
         timeTravel: true,
       })
       squares.first().simulate('click');
-      expect(App.prototype.makeMove, 'First click should be counted').to.have.property('callCount', 1);
+      expect(App.prototype.makeMove, 'Click should be counted').to.have.property('callCount', 1);
       expect(wrapper.state().game[index], `'state.game[${index}]' should not change when in 'timeTravel'`).to.equal(null);
+      expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
+      expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
+    })
+    it('`#makeMove` does nothing if `state.winner` is defined', () => {
+      const squares = wrapper.find('.square');
+      const index = 0;
+      wrapper.setState({
+        winner: 'X'
+      })
+      squares.first().simulate('click');
+      expect(App.prototype.makeMove, 'Click should be counted').to.have.property('callCount', 1);
+      expect(wrapper.state().game[index], `'state.game[${index}]' should not update when there is a winner`).to.equal(null);
       expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
       expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
     })
