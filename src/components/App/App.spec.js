@@ -189,5 +189,21 @@ describe('<App />', () => {
       })
       expect(squares.map(square => square.text())).to.deep.equal(['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X'])
     })
+    it('`#makeMove()` does nothing if clicked Square has value', () => {
+      const squares = wrapper.find('.square');
+      const index = 0;
+      // initial valid click
+      squares.first().simulate('click');
+      expect(App.prototype.makeMove, 'First click should only count once').to.have.property('callCount', 1);
+      expect(wrapper.state().game[index], `'state.game[${index}]' should be updated with player`).to.equal('X');
+      expect(wrapper.state().moves[index], `'state.moves[${index}]' should be updated with square index`).to.equal(index);
+      expect(wrapper.state().moves.length, `'state.moves' should have a single item`).to.equal(1);
+      // second click on already clicked Square
+      squares.first().simulate('click');
+      expect(App.prototype.makeMove, 'Second click should call the function again').to.have.property('callCount', 2)
+      expect(wrapper.state().game[index], `'state.game[${index}]' should not change once set`).to.equal('X');
+      expect(wrapper.state().moves[index], `'state.moves[${index}]' should not change once set`).to.equal(index);
+      expect(wrapper.state().moves.length, `'state.moves' should have a single item`).to.equal(1);
+    })
   })
 })
