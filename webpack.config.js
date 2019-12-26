@@ -54,7 +54,8 @@ module.exports = {
   resolve: {
     alias: {
       src: path.resolve(__dirname, 'src/'),
-      test: path.resolve(__dirname, 'test/')
+      test: path.resolve(__dirname, 'test/'),
+      contexts: path.resolve(__dirname, 'src/contexts/')
     }
   }
 };
