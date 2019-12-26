@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Square from '../Square';
+
 const Game = ({ game }) => {
   if (!game) {
     return null;
@@ -9,7 +11,10 @@ const Game = ({ game }) => {
     <div className="gameboard">
       {
         game.map((value, index) => (
-          <div key={index}>{value}</div>
+          <Square
+            key={index}
+            value={value}
+          />
         ))
       }
     </div>
