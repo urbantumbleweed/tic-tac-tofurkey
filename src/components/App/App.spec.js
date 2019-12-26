@@ -25,15 +25,18 @@ describe('<App />', () => {
   let wrapper;
   let toggleTimeTravelSpy;
   let clearGameSpy;
+  let makeMoveSpy;
   beforeEach(() => {
     toggleTimeTravelSpy = spy(App.prototype, 'toggleTimeTravel');
     clearGameSpy = spy(App.prototype, 'clearGame');
+    makeMoveSpy = spy(App.prototype, 'makeMove');
     wrapper = mount(<App />);
   })
   afterEach(() => {
     wrapper.unmount();
     toggleTimeTravelSpy.restore();
     clearGameSpy.restore();
+    makeMoveSpy.restore();
   })
   describe(' helpers', () => {
     it(' `#promptMap()` is a function that returns strings', () => {
@@ -171,6 +174,20 @@ describe('<App />', () => {
       expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
       expect(winner, '`state.winner` should reinitialize to `null`').to.be.null;
       expect(App.prototype.clearGame).to.have.property('callCount', 1)
+    })
+  })
+  describe('handlers', () => {
+    it('`#makeMove()` updates `game` and `moves` if valid', () => {
+      const squares = wrapper.find('.square');
+      squares.forEach((_, index) => {
+        squares.at(index).simulate('click');
+        expect(App.prototype.makeMove, 'makeMove should be called when a Square is clicked').to.have.property('callCount', index + 1)
+        const { game, moves } = wrapper.state();
+        const player = index % 2 === 0 ? 'X' : 'O';
+        expect(game[index], `'state.game[${index}]' should be updated with player`).to.equal(player);
+        expect(moves[index], `'state.moves[${index}]' should be updated with square index`).to.equal(index);
+      })
+      expect(squares.map(square => square.text())).to.deep.equal(['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X'])
     })
   })
 })
