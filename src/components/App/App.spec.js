@@ -105,5 +105,8 @@ describe('<App />', () => {
     it(' displays a <Prompt /> component', () => {
       expect(Prompt.type()).to.equal('div')
     })
+    it(' passes a `message` to be rendered by Prompt', () => {
+      expect(validMessages.includes(Prompt.text()), 'Prompt does not have a valid message').to.be.true;
+    })
   })
 })

@@ -29,14 +29,14 @@ class App extends Component {
     return (
       <div className="app">
         <h1 className="appHeader">Tic Tac Tofurkey</h1>
-      <div>
+        <Prompt message={promptMap(currentMove, winner)} />
+        <Game game={this.state.game} />
         <button
           onClick={this.toggleTimeTravel}
           className="time-travel"
         >
           {`Time Travel: ${suffix}`}
         </button>
-        <Game game={currentGame} />
       </div> );
   }
 }
