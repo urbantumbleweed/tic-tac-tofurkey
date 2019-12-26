@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Game from './Game';
+import gameCombinator from 'test/gameCombinator';
+
+const gameCombinations = gameCombinator();
 
 describe('<Game />', () => {
   let wrapper;
