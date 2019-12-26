@@ -4,6 +4,7 @@ import Prompt from '../Prompt';
 import 'src/styles.scss';
 import { promptMap } from './App.helpers';
 import TimeTravelButton from '../TimeTravelButton';
+import ClearButton from '../ClearGame';
 
 class App extends Component {
   constructor(props) {
@@ -14,12 +15,21 @@ class App extends Component {
       moves: [],
     }
     this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
+    this.clearGame = this.clearGame.bind(this);
   }
 
   toggleTimeTravel(e) {
     e.preventDefault();
     this.setState(state => 
       ({ timeTravel: !state.timeTravel}))
+  }
+
+  clearGame(e) {
+    e.preventDefault(e);
+    this.setState({
+      game: Array(9).fill(null),
+      moves: [],
+    })
   }
 
   render() {
@@ -34,6 +44,7 @@ class App extends Component {
         <Game game={this.state.game} />
         <div className="actions">
           <TimeTravelButton onClick={this.toggleTimeTravel} suffix={suffix} />
+          <ClearButton onClick={this.clearGame}/>
         </div>
       </div> );
   }
