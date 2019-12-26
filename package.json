@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node_modules/.bin/webpack-dev-server --open --progress",
     "test": "mocha 'src/**/*.spec.js'",
-    "test:watch": "mocha --require @babel/register --recursive --reporter min --watch 'src/**/*.spec.js'"
+    "test:watch": "MOCHA_WATCH=true mocha --require @babel/register --recursive --reporter min --watch 'src/**/*.spec.js'"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
