@@ -23,7 +23,8 @@ describe('<Game />', () => {
       wrapper = mount(<Game game={gameCombinations[0]} />);
       expect(wrapper.find('.gameboard').exists()).to.be.true;
     })
-    it(' renders 9 <Square /> for all 6046 valid game combinations', (done) => {
+    it(' renders 9 <Square /> for all 6046 valid game combinations', function () {
+      this.timeout(10000)
       gameCombinations.forEach((game, gameIndex) => {
         wrapper = shallow(<Game game={game} />);
         const gameboard = wrapper.find('.gameboard');
@@ -32,7 +33,6 @@ describe('<Game />', () => {
         expect(children.length, 'children of `Game` should all be of type <Square>').to.equal(9)
         wrapper.unmount();
       })
-      done();
     })
   })
 })
