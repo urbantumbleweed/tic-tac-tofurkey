@@ -10,3 +10,16 @@ export function promptMap(moves, winner = null) {
       return '';
   }
 }
+
+export function calculateWinner(game) {
+  const wins = [
+    [0, 1, 2]
+  ];
+  for(var i = 0; i < wins.length; i++) {
+    const [a, b, c] = wins[i];
+    if (game[a] === game[b] && game[b] === game[c]) {
+      return game[a];
+    }
+  }
+  return null;
+}

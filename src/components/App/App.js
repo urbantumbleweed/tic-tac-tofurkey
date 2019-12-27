@@ -3,7 +3,7 @@ import GameContext from 'contexts/GameContext';
 import Game from '../Game';
 import Prompt from '../Prompt';
 import 'src/styles.scss';
-import { promptMap } from './App.helpers';
+import { promptMap, calculateWinner } from './App.helpers';
 import TimeTravelButton from '../TimeTravelButton';
 import ClearButton from '../ClearGame';
 
@@ -14,6 +14,7 @@ class App extends Component {
       timeTravel: false,
       game: Array(9).fill(null),
       moves: [],
+      winner: null,
     }
     this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
     this.clearGame = this.clearGame.bind(this);
@@ -31,20 +32,29 @@ class App extends Component {
     this.setState({
       game: Array(9).fill(null),
       moves: [],
+      winner: null,
     })
   }
 
   makeMove(i) {
-    if (this.state.game[i] !== null) {
-      return;
+    switch(true) {
+      // Do nothing
+      case this.state.game[i] !== null:
+      case this.state.timeTravel:
+      case this.state.winner !== null:
+        return;
+      default:
+        break;
     }
     this.setState(state => {
       const newGame = state.game.slice();
       const player = state.moves.length % 2 === 0 ? 'X' : 'O';
       newGame[i] = player;
+      const winner = calculateWinner(newGame);
       return {
         game: newGame,
         moves: state.moves.concat([i]),
+        winner,
       };
     })
   }
