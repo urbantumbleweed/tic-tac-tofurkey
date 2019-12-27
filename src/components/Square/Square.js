@@ -9,7 +9,7 @@ class Square extends Component {
       <GameContext.Consumer>
         {({ makeMove, timeTravel}) => (
           <div className="square" onClick={() => makeMove(this.props.index)}>
-            <span className="value">{this.props.value}</span>
+            <div className="value">{this.props.value}</div>
           </div>
         )}
       </GameContext.Consumer>
