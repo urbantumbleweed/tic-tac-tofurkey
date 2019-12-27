@@ -22,7 +22,8 @@ export function calculateWinner(game) {
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
-    [0, 3, 6]
+    [0, 3, 6],
+    [1, 4, 7],
   ];
   for(var i = 0; i < wins.length; i++) {
     const [a, b, c] = wins[i];
