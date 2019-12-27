@@ -13,7 +13,8 @@ export function promptMap(moves, winner = null) {
 
 export function calculateWinner(game) {
   const wins = [
-    [0, 1, 2]
+    [0, 1, 2],
+    [3, 4, 5]
   ];
   for(var i = 0; i < wins.length; i++) {
     const [a, b, c] = wins[i];
