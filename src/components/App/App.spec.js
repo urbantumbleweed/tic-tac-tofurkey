@@ -235,8 +235,35 @@ describe('<App />', () => {
         expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
         expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('O');
       })
-      it('detects a diag-down winner', () => {
-        
+      it('detects a diag-down O winner', () => {
+        const [ game, nextMove, moves] = wins.diagDownO;
+        wrapper.setState({
+          game,
+          moves,
+        })
+        expect(wrapper.state().game).to.deep.equal(game);
+        expect(wrapper.state().moves).to.deep.equal(moves);
+        wrapper.find('.square').at(nextMove).simulate('click');
+        // since game is a reference to old state, we can mutate it to include the value added on click
+        game.splice(nextMove, 1, 'O')
+        expect(wrapper.state().game, '`state.game` after click should include new move').to.deep.equal(game);
+        expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
+        expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('O');
+      })
+      it('detects a diag-down X winner', () => {
+        const [ game, nextMove, moves] = wins.diagDownX;
+        wrapper.setState({
+          game,
+          moves,
+        })
+        expect(wrapper.state().game).to.deep.equal(game);
+        expect(wrapper.state().moves).to.deep.equal(moves);
+        wrapper.find('.square').at(nextMove).simulate('click');
+        // since game is a reference to old state, we can mutate it to include the value added on click
+        game.splice(nextMove, 1, 'X')
+        expect(wrapper.state().game, '`state.game` after click should include new move').to.deep.equal(game);
+        expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
+        expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('X');
       })
       it('detects a diag-up winner', () => {
         
