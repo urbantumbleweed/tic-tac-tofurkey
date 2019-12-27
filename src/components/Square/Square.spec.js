@@ -17,6 +17,9 @@ describe('<Square />', () => {
     wrapper = null;
   })
   it('renders a div with the class `square', () => {
-    expect(wrapper.find('div').hasClass('square')).to.be.true;
+    expect(wrapper.find('div').first().hasClass('square')).to.be.true;
+  })
+  it('one child is a div with the class `value`', () => {
+    expect(wrapper.find('div.square').find('.value')).to.have.lengthOf(1);
   })
 })
