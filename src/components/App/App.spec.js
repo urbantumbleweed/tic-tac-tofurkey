@@ -54,6 +54,25 @@ describe('<App />', () => {
             ).to.equal(validMessages[1])
         }
       }
+      expect(
+        promptMap(null, 'X'),
+        `If 'X' wins, the message should be '${validMessages[2]}'`
+        ).to.equal(validMessages[2])
+      expect(
+        promptMap(null, 'O'),
+        `If 'O' wins, the message should be '${validMessages[3]}'`
+        ).to.equal(validMessages[3])
+    })
+    it(' `#prompMap() favors the presence of a `winner` parameter', () => {
+      expect(
+        promptMap(4, 'X'),
+        `If a winner X is passed, the message should be '${validMessages[2]}'`
+        ).to.equal(validMessages[2])
+      expect(
+        promptMap(5, 'O'),
+        `If a winner O is passed, the message should be  '${validMessages[3]}'`
+        ).to.equal(validMessages[3])
+    })
     })
     describe('`#calculateWinner()`', () => {
       it('detects a top-row X winner', () => {
