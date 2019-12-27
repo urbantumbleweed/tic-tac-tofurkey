@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
+import { wins } from 'test/fixtures';
 
 import App from './index';
 import { validMessages } from './App.constants';
@@ -55,6 +54,38 @@ describe('<App />', () => {
             ).to.equal(validMessages[1])
         }
       }
+    describe('`#calculateWinner()`', () => {
+      it('detects a top-row X winner', () => {
+        const [ game, nextMove, moves] = wins.topRowX;
+        wrapper.setState({
+          game,
+          moves,
+        })
+        expect(wrapper.state().game).to.deep.equal(game);
+        expect(wrapper.state().moves).to.deep.equal(moves);
+        wrapper.find('.square').at(nextMove).simulate('click');
+        // since game is a reference to old state, we can mutate it to include the value added on click
+        game.splice(nextMove, 1, 'X')
+        expect(wrapper.state().game, '`state.game` after click should include new move').to.deep.equal(game);
+        expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
+        expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('X');
+      })
+      it('detects a top-row O winner', () => {
+        const [ game, nextMove, moves] = wins.topRowO;
+        wrapper.setState({
+          game,
+          moves,
+        })
+        expect(wrapper.state().game).to.deep.equal(game);
+        expect(wrapper.state().moves).to.deep.equal(moves);
+        wrapper.find('.square').at(nextMove).simulate('click');
+        // since game is a reference to old state, we can mutate it to include the value added on click
+        game.splice(nextMove, 1, 'O')
+        expect(wrapper.state().game, '`state.game` after click should include new move').to.deep.equal(game);
+        expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
+        expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('O');
+      })
+    })
   })
   describe(' state', () => {
     it(' initializes with `state.timeTravel` that is `false`', () => {
