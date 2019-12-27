@@ -73,7 +73,6 @@ describe('<App />', () => {
         `If a winner O is passed, the message should be  '${validMessages[3]}'`
         ).to.equal(validMessages[3])
     })
-    })
     describe('`#calculateWinner()`', () => {
       it('detects a top-row X winner', () => {
         const [ game, nextMove, moves] = wins.topRowX;
