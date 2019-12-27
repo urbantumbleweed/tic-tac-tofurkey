@@ -73,6 +73,12 @@ describe('<App />', () => {
         `If a winner O is passed, the message should be  '${validMessages[3]}'`
         ).to.equal(validMessages[3])
     })
+    it( ' `#promptMap()` produces a tie message there is no winner', () => {
+      expect(
+        promptMap(9, undefined),
+        `If game is tie, then message should be '${validMessages[4]}'`
+        ).to.equal(validMessages[4])
+    })
     describe('`#calculateWinner()`', () => {
       it('detects a top-row X winner', () => {
         const [ game, nextMove, moves] = wins.topRowX;
