@@ -532,6 +532,36 @@ describe('<App />', () => {
         goToButton.first().simulate('click');
         expect(App.prototype.goTo, 'First click should only count once').to.have.property('callCount', 1);
       })
+      it('is called with a pastMove identifier to revert state', () => {
+        const game = Array(9).fill(null);
+        let playedSquare = 3;
+        game[playedSquare] = 'X';
+        let moves = [playedSquare];
+        // set state for the first move
+        wrapper.setState({
+          timeTravel: true,
+          game,
+          moves: moves.slice(),
+        })
+        let goToButton = wrapper.find('.gotoButton');
+        goToButton.first().simulate('click');
+        let wentTo = wrapper.state().moves.indexOf(playedSquare);
+        expect(App.prototype.goTo.lastCall.args[0], '`goTo` should be called with the `pastMove` index').to.equal(wentTo);
+
+        // play next move
+        playedSquare += 3;
+        game[playedSquare] = 'O';
+        moves.push(playedSquare);
+        // increment state
+        wrapper.setState({
+          timeTravel: true,
+          game,
+          moves: moves.slice(),
+        })
+        goToButton = wrapper.find('.gotoButton');
+        goToButton.at(1).simulate('click');
+        wentTo = wrapper.state().moves.indexOf(playedSquare);
+        expect(App.prototype.goTo.lastCall.args[0], '`goTo` should be called with the next `pastMove` index').to.equal(wentTo);
       })
     })
   })
