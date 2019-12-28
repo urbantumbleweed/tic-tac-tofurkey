@@ -461,57 +461,59 @@ describe('<App />', () => {
     })
   })
   describe('handlers', () => {
-    it('`#makeMove()` updates `game` and `moves` if valid', () => {
-      const squares = wrapper.find('.square');
-      squares.forEach((_, index) => {
-        squares.at(index).simulate('click');
-        expect(App.prototype.makeMove, 'makeMove should be called when a Square is clicked').to.have.property('callCount', index + 1)
-        const { game, moves } = wrapper.state();
-        const player = index % 2 === 0 ? 'X' : 'O';
-        expect(game[index], `'state.game[${index}]' should be updated with player`).to.equal(player);
-        expect(moves[index], `'state.moves[${index}]' should be updated with square index`).to.equal(index);
-        wrapper.setState({ game: Array(9).fill(null) })
+    describe('#makeMove()', () => {
+      it('updates `game` and `moves` if valid', () => {
+        const squares = wrapper.find('.square');
+        squares.forEach((_, index) => {
+          squares.at(index).simulate('click');
+          expect(App.prototype.makeMove, 'makeMove should be called when a Square is clicked').to.have.property('callCount', index + 1)
+          const { game, moves } = wrapper.state();
+          const player = index % 2 === 0 ? 'X' : 'O';
+          expect(game[index], `'state.game[${index}]' should be updated with player`).to.equal(player);
+          expect(moves[index], `'state.moves[${index}]' should be updated with square index`).to.equal(index);
+          wrapper.setState({ game: Array(9).fill(null) })
+        })
       })
-    })
-    it('`#makeMove()` does nothing if clicked Square has value', () => {
-      const squares = wrapper.find('.square');
-      const index = 0;
-      // initial valid click
-      squares.first().simulate('click');
-      expect(App.prototype.makeMove, 'First click should only count once').to.have.property('callCount', 1);
-      expect(wrapper.state().game[index], `'state.game[${index}]' should be updated with player`).to.equal('X');
-      expect(wrapper.state().moves[index], `'state.moves[${index}]' should be updated with square index`).to.equal(index);
-      expect(wrapper.state().moves.length, `'state.moves' should have a single item`).to.equal(1);
-      // second click on already clicked Square
-      squares.first().simulate('click');
-      expect(App.prototype.makeMove, 'Second click should call the function again').to.have.property('callCount', 2)
-      expect(wrapper.state().game[index], `'state.game[${index}]' should not change once set`).to.equal('X');
-      expect(wrapper.state().moves[index], `'state.moves[${index}]' should not change once set`).to.equal(index);
-      expect(wrapper.state().moves.length, `'state.moves' should have a single item`).to.equal(1);
-    })
-    it('`#makeMove()` does nothing if `state.timeTravel` is true', () => {
-      const squares = wrapper.find('.square');
-      const index = 0;
-      wrapper.setState({
-        timeTravel: true,
+      it('does nothing if clicked Square has value', () => {
+        const squares = wrapper.find('.square');
+        const index = 0;
+        // initial valid click
+        squares.first().simulate('click');
+        expect(App.prototype.makeMove, 'First click should only count once').to.have.property('callCount', 1);
+        expect(wrapper.state().game[index], `'state.game[${index}]' should be updated with player`).to.equal('X');
+        expect(wrapper.state().moves[index], `'state.moves[${index}]' should be updated with square index`).to.equal(index);
+        expect(wrapper.state().moves.length, `'state.moves' should have a single item`).to.equal(1);
+        // second click on already clicked Square
+        squares.first().simulate('click');
+        expect(App.prototype.makeMove, 'Second click should call the function again').to.have.property('callCount', 2)
+        expect(wrapper.state().game[index], `'state.game[${index}]' should not change once set`).to.equal('X');
+        expect(wrapper.state().moves[index], `'state.moves[${index}]' should not change once set`).to.equal(index);
+        expect(wrapper.state().moves.length, `'state.moves' should have a single item`).to.equal(1);
       })
-      squares.first().simulate('click');
-      expect(App.prototype.makeMove, 'Click should be counted').to.have.property('callCount', 1);
-      expect(wrapper.state().game[index], `'state.game[${index}]' should not change when in 'timeTravel'`).to.equal(null);
-      expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
-      expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
-    })
-    it('`#makeMove` does nothing if `state.winner` is defined', () => {
-      const squares = wrapper.find('.square');
-      const index = 0;
-      wrapper.setState({
-        winner: 'X'
+      it('does nothing if `state.timeTravel` is true', () => {
+        const squares = wrapper.find('.square');
+        const index = 0;
+        wrapper.setState({
+          timeTravel: true,
+        })
+        squares.first().simulate('click');
+        expect(App.prototype.makeMove, 'Click should be counted').to.have.property('callCount', 1);
+        expect(wrapper.state().game[index], `'state.game[${index}]' should not change when in 'timeTravel'`).to.equal(null);
+        expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
+        expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
       })
-      squares.first().simulate('click');
-      expect(App.prototype.makeMove, 'Click should be counted').to.have.property('callCount', 1);
-      expect(wrapper.state().game[index], `'state.game[${index}]' should not update when there is a winner`).to.equal(null);
-      expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
-      expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
+      it('does nothing if `state.winner` is defined', () => {
+        const squares = wrapper.find('.square');
+        const index = 0;
+        wrapper.setState({
+          winner: 'X'
+        })
+        squares.first().simulate('click');
+        expect(App.prototype.makeMove, 'Click should be counted').to.have.property('callCount', 1);
+        expect(wrapper.state().game[index], `'state.game[${index}]' should not update when there is a winner`).to.equal(null);
+        expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
+        expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
+      })
     })
   })
 })
