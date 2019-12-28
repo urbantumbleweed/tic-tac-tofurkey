@@ -40,49 +40,51 @@ describe('<App />', () => {
     makeMoveSpy.restore();
     goToSpy.restore();
   })
-  describe(' helpers', () => {
-    it(' `#promptMap()` is a function that returns strings', () => {
-      expect(typeof promptMap).to.equal('function')
-      expect(promptMap(), 'should return an empty string if called with no args').to.equal('');
-      for (let move = 0; move < 9; move++) {
-        if (move % 2 === 0) {
-          expect(
-            promptMap(move),
-            `If it is X's turn, the message should be '${validMessages[0]}'`
-            ).to.equal(validMessages[0])
-        } else {
-          expect(
-            promptMap(move),
-            `If it is O's turn, the message should be '${validMessages[1]}'`
-            ).to.equal(validMessages[1])
+  describe('helpers', () => {
+    describe('#promptMap()', () => {
+      it('is a function that returns strings', () => {
+        expect(typeof promptMap).to.equal('function')
+        expect(promptMap(), 'should return an empty string if called with no args').to.equal('');
+        for (let move = 0; move < 9; move++) {
+          if (move % 2 === 0) {
+            expect(
+              promptMap(move),
+              `If it is X's turn, the message should be '${validMessages[0]}'`
+              ).to.equal(validMessages[0])
+          } else {
+            expect(
+              promptMap(move),
+              `If it is O's turn, the message should be '${validMessages[1]}'`
+              ).to.equal(validMessages[1])
+          }
         }
-      }
-      expect(
-        promptMap(null, 'X'),
-        `If 'X' wins, the message should be '${validMessages[2]}'`
-        ).to.equal(validMessages[2])
-      expect(
-        promptMap(null, 'O'),
-        `If 'O' wins, the message should be '${validMessages[3]}'`
-        ).to.equal(validMessages[3])
+        expect(
+          promptMap(null, 'X'),
+          `If 'X' wins, the message should be '${validMessages[2]}'`
+          ).to.equal(validMessages[2])
+        expect(
+          promptMap(null, 'O'),
+          `If 'O' wins, the message should be '${validMessages[3]}'`
+          ).to.equal(validMessages[3])
+      })
+      it('favors the presence of a `winner` parameter', () => {
+        expect(
+          promptMap(4, 'X'),
+          `If a winner X is passed, the message should be '${validMessages[2]}'`
+          ).to.equal(validMessages[2])
+        expect(
+          promptMap(5, 'O'),
+          `If a winner O is passed, the message should be  '${validMessages[3]}'`
+          ).to.equal(validMessages[3])
+      })
+      it('produces a tie message there is no winner', () => {
+        expect(
+          promptMap(9, undefined),
+          `If game is tie, then message should be '${validMessages[4]}'`
+          ).to.equal(validMessages[4])
+      })
     })
-    it(' `#prompMap() favors the presence of a `winner` parameter', () => {
-      expect(
-        promptMap(4, 'X'),
-        `If a winner X is passed, the message should be '${validMessages[2]}'`
-        ).to.equal(validMessages[2])
-      expect(
-        promptMap(5, 'O'),
-        `If a winner O is passed, the message should be  '${validMessages[3]}'`
-        ).to.equal(validMessages[3])
-    })
-    it( ' `#promptMap()` produces a tie message there is no winner', () => {
-      expect(
-        promptMap(9, undefined),
-        `If game is tie, then message should be '${validMessages[4]}'`
-        ).to.equal(validMessages[4])
-    })
-    describe('`#calculateWinner()`', () => {
+    describe('#calculateWinner()', () => {
       it('detects a top-row X winner', () => {
         const [ game, nextMove, moves] = wins.topRowX;
         wrapper.setState({
@@ -323,33 +325,32 @@ describe('<App />', () => {
         expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
         expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('O');
       })
-      it('detects a sparse board winner', () => {
-        
+      it('detects a sparse board winner')
+      it('detects a full board winner')
+      it('detects a full board tie')
+    })
+  })
+  describe('state', () => {
+    describe('initializes', () => {
+      it('`timeTravel` as `false`', () => {
+        const timeTravel = wrapper.state().timeTravel;
+        expect(timeTravel).to.be.a('boolean', '`state.timeTravel` is not Boolean')
+        expect(timeTravel).to.be.false;
       })
-      it('detects a full board winner', () => {
-        
+      it('`moves` as an empty Array', () => {
+        const moves = wrapper.state().moves;
+        expect(moves instanceof Array, '`state.moves` is not an Array').to.true
+        expect(moves.length, '`state.moves` should initialize with no moves').to.equal(0);
+      })
+      it('`game` as a games-sized Array of nulls', () => {
+        const game = wrapper.state().game;
+        expect(game instanceof Array, '`state.game` is not an Array').to.true;
+        expect(game.length, '`state.game` must initialize with a length of 9').to.equal(9);
+        expect(game, '`state.game` should initialize with null values').to.deep.equal(Array(9).fill(null));
       })
     })
   })
-  describe(' state', () => {
-    it(' initializes with `state.timeTravel` that is `false`', () => {
-      const timeTravel = wrapper.state().timeTravel;
-      expect(timeTravel).to.be.a('boolean', '`state.timeTravel` is not Boolean')
-      expect(timeTravel).to.be.false;
-    })
-    it(' initializes with `state.moves` that is an Array', () => {
-      const moves = wrapper.state().moves;
-      expect(moves instanceof Array, '`state.moves` is not an Array').to.true
-      expect(moves.length, '`state.moves` should initialize with no moves').to.equal(0);
-    })
-    it(' initializes with `state.game` that is an Array', () => {
-      const game = wrapper.state().game;
-      expect(game instanceof Array, '`state.game` is not an Array').to.true;
-      expect(game.length, '`state.game` must initialize with a length of 9').to.equal(9);
-      expect(game, '`state.game` should initialize with null values').to.deep.equal(Array(9).fill(null));
-    })
-  })
-  describe('#render ', () => {
+  describe('render', () => {
     let button;
     let Game;
     let Prompt
@@ -366,13 +367,13 @@ describe('<App />', () => {
       Prompt = null;
       ClearButton = null;
     })
-    it( ' displays a header', () => {
+    it('<header> with fun title', () => {
       expect(wrapper.find('.appHeader').text()).to.equal('Tic Tac Tofurkey')
     })
-    it(' displays an actions container where TimeTravel button lives', () => {
-      expect(wrapper.find('.actions').children.length).to.be.equal(1);
+    it('actions container with `Time Travel` and `Clear Game` options', () => {
+      expect(wrapper.find('.actions').children().length).to.be.equal(2);
     })
-    it(' `Time Travel` button that when clicked toggles `timeTravel`', () => {
+    it('`Time Travel` button that when clicked toggles `timeTravel`', () => {
       const expectedValues = [true, false, true, false];
       expectedValues.forEach((expectedValue, index) => {
         button.simulate('click');
@@ -384,7 +385,7 @@ describe('<App />', () => {
       })
       expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
     })
-    it(' `Time Travel` button is denoted as `on` or `off`', () => {
+    it('`Time Travel` button is denoted as `on` or `off`', () => {
       expect(button.text()).to.contain('Time Travel:');
       const expectedValues = ['off', 'on', 'off', 'on'];
       expectedValues.forEach((suffix, i) => {
@@ -394,20 +395,20 @@ describe('<App />', () => {
       })
       expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
     })
-    it(' displays a <Game /> component', () => {
+    it('displays a <Game /> component', () => {
       expect(Game.type(), '<Game /> is a div').to.equal('div')
     })
-    it(' passes a `game` array to the Game and renders 9 children', () => {
+    it('passes a `game` array to the Game and renders 9 children', () => {
       const gameProps = Game.props();
       expect(gameProps.children.length, 'Game has 9 children').to.equal(9)
     })
-    it(' displays a <Prompt /> component', () => {
+    it('displays a <Prompt /> component', () => {
       expect(Prompt.type()).to.equal('div')
     })
-    it(' passes a `message` to be rendered by Prompt', () => {
+    it('passes a `message` to be rendered by Prompt', () => {
       expect(validMessages.includes(Prompt.text()), 'Prompt does not have a valid message').to.be.true;
     })
-    it(' `Clear Game` component that when clicked, reinitializes `game` and `moves`', () => {
+    it('`Clear Game` component that when clicked, reinitializes `game` and `moves`', () => {
       const existingGame = gameCombinations[800].slice();
       const existingMoves = existingGame.reduce((acc, move, i) => {
         if (move) {
