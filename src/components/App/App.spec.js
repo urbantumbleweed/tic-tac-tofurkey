@@ -447,6 +447,18 @@ describe('<App />', () => {
       expect(winner, '`state.winner` should reinitialize to `null`').to.be.null;
       expect(App.prototype.clearGame).to.have.property('callCount', 1)
     })
+    it('includes <Move /> components in its childNodes if `timeTravel` is enabled', () => {
+      const [game, insert, moves] = wins.topRowX;
+      const newGame = game.slice();
+      newGame[insert] = null;
+      wrapper.setState({
+        timeTravel: true,
+        game: newGame,
+        moves,
+      });
+      let moveComponent = wrapper.find('.gotoButton');
+      expect(moveComponent).to.have.lengthOf(moves.length)
+    })
   })
   describe('handlers', () => {
     it('`#makeMove()` updates `game` and `moves` if valid', () => {
