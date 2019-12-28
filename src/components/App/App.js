@@ -19,6 +19,7 @@ class App extends Component {
     this.toggleTimeTravel = this.toggleTimeTravel.bind(this);
     this.clearGame = this.clearGame.bind(this);
     this.makeMove = this.makeMove.bind(this);
+    this.goTo = this.goTo.bind(this);
   }
 
   toggleTimeTravel(e) {
@@ -59,6 +60,10 @@ class App extends Component {
     })
   }
 
+  goTo(i) {
+
+  }
+
   render() {
     const suffix = this.state.timeTravel ? 'on' : 'off';
     const currentMove = this.state.moves.length;
@@ -71,7 +76,7 @@ class App extends Component {
         <GameContext.Provider
           value={{
             makeMove: this.makeMove,
-            goTo: (move) => console.log(move),
+            goTo: this.goTo,
             timeTravel: this.state.timeTravel,
             isTurnX,
             moves: this.state.moves,
