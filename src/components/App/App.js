@@ -74,6 +74,7 @@ class App extends Component {
             goTo: (move) => console.log(move),
             timeTravel: this.state.timeTravel,
             isTurnX,
+            moves: this.state.moves,
           }}>
           <Game game={this.state.game} />
         </GameContext.Provider>
