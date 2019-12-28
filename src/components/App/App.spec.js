@@ -25,10 +25,12 @@ describe('<App />', () => {
   let toggleTimeTravelSpy;
   let clearGameSpy;
   let makeMoveSpy;
+  let goToSpy;
   beforeEach(() => {
     toggleTimeTravelSpy = spy(App.prototype, 'toggleTimeTravel');
     clearGameSpy = spy(App.prototype, 'clearGame');
     makeMoveSpy = spy(App.prototype, 'makeMove');
+    goToSpy = spy(App.prototype, 'goTo');
     wrapper = mount(<App />);
   })
   afterEach(() => {
@@ -36,6 +38,7 @@ describe('<App />', () => {
     toggleTimeTravelSpy.restore();
     clearGameSpy.restore();
     makeMoveSpy.restore();
+    goToSpy.restore();
   })
   describe(' helpers', () => {
     it(' `#promptMap()` is a function that returns strings', () => {
@@ -513,6 +516,22 @@ describe('<App />', () => {
         expect(wrapper.state().game[index], `'state.game[${index}]' should not update when there is a winner`).to.equal(null);
         expect(wrapper.state().moves[index], `'state.moves[${index}]' should remain undefined`).to.be.undefined;
         expect(wrapper.state().moves.length, `'state.moves' should be not have added a value`).to.equal(0);
+      })
+    })
+    describe('#goTo()', () => {
+      it('called when <Move /> is clicked with `pastMove` index of the square', () => {
+        const game = Array(9).fill(null);
+        const moveIndex = 3;
+        game[moveIndex] = 'X';
+        wrapper.setState({
+          timeTravel: true,
+          game,
+          moves: [moveIndex],
+        })
+        const goToButton = wrapper.find('.gotoButton');
+        goToButton.first().simulate('click');
+        expect(App.prototype.goTo, 'First click should only count once').to.have.property('callCount', 1);
+      })
       })
     })
   })
