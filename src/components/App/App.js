@@ -61,7 +61,13 @@ class App extends Component {
   }
 
   goTo(i) {
+    this.setState(state => {
+      const revertedMoves = state.moves.slice(0, i + 1);
 
+      return {
+        moves: revertedMoves,
+      }
+    })
   }
 
   render() {
