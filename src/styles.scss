@@ -81,6 +81,24 @@ html, body, #app, .app {
   align-items: center;
 }
 
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7rem;
+  height: 2rem;
+  font-family: "Helvetica Neue", "Open Sans", "Sans";
+  font-size: 14px;
+  &.timeTravel {
+    &.on {
+      border: 2px solid $color4;
+    }
+    &:hover, &.on {
+      background-color: rgba($color4, .2);
+    }
+  }
+}
+
 .gameboard {
   display: grid;
   grid-template-rows: repeat(3, 33%);

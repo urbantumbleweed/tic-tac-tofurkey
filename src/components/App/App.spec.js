@@ -590,7 +590,7 @@ describe('<App />', () => {
     })
     describe('#toggleTimeTravel()', () => {
       it('toggles `state.timeTravel', () => {
-        const timeTravelButton = wrapper.find('.time-travel');
+        const timeTravelButton = wrapper.find('.timeTravel');
         const expectedValues = [true, false, true, false];
         expectedValues.forEach((expectedValue, index) => {
           timeTravelButton.simulate('click');

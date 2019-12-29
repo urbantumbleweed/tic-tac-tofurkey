@@ -1,13 +1,15 @@
 import React from 'react';
+import classnames from 'classnames';
 
 const TimeTravelButton = ({ onClick, suffix }) => {
   return ( 
-    <button
+    <div
+      role="button"
       onClick={onClick}
-      className="time-travel"
+      className={classnames('button','timeTravel', suffix)}
     >
-      {`Time Travel: ${suffix}`}
-    </button>
+      {'⏱️✈️'}
+    </div>
   );
 }
  
