@@ -3,7 +3,7 @@ import GameContext from 'contexts/GameContext';
 import Game from '../Game';
 import Prompt from '../Prompt';
 import 'src/styles.scss';
-import { promptMap, calculateWinner } from './App.helpers';
+import { promptMap, calculateWinner } from 'helpers';
 import TimeTravelButton from '../TimeTravelButton';
 import ClearButton from '../ClearGame';
 
