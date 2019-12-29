@@ -63,8 +63,13 @@ class App extends Component {
   goTo(i) {
     this.setState(state => {
       const revertedMoves = state.moves.slice(0, i + 1);
+      const revertedGame =  revertedMoves.reduce((newGame, square, move) => {
+        newGame[square] = move % 2 === 0 ? 'X' : 'O';
+        return newGame;
+      }, Array(9).fill(null))
 
       return {
+        game: revertedGame,
         moves: revertedMoves,
       }
     })
