@@ -600,6 +600,19 @@ describe('<App />', () => {
         game[moveIndex] = 'X';
         expect(wrapper.state().game, 'should still have the earlier plays').to.deep.equal(game);
       })
+      it('it recalculates `winner` when called', () => {
+        const [completedGame, nextMove, moves] = wins.topRowX;
+        wrapper.setState({
+          timeTravel: true,
+          game: game.slice(),
+          moves: moves.concat([nextMove]),
+          winner: calculateWinner(completedGame)
+        })
+        expect(wrapper.state().winner, '`winner` should be defined before test').to.equal('X');
+        const goToButton = wrapper.find('.gotoButton');
+        goToButton.at(0).simulate('click');
+        expect(wrapper.state().winner, '`winner` should be recalculated').to.be.null;
+      })
     })
   })
 })
