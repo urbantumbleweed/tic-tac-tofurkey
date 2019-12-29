@@ -1,23 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import PropTypes from 'prop-types';
 import validOptions from 'src/constants/validOptions'
 import GameContext from 'contexts/GameContext';
 import Move from '../Move';
 
-class Square extends Component {
-  render() { 
-    const { index, value } = this.props;
-    return (
-      <GameContext.Consumer>
-        {({ makeMove, timeTravel}) => (
-          <div className="square" onClick={() => makeMove(index)}>
-            <div className="value">{value}</div>
-            {timeTravel && <Move square={index} />}
-          </div>
-        )}
-      </GameContext.Consumer>
-    );
-  }
+function Square ({ index, value }) {
+  const { makeMove, timeTravel} = useContext(GameContext);
+  return (
+    <div className="square" onClick={() => makeMove(index)}>
+      <div className="value">{value}</div>
+      {timeTravel && <Move square={index} />}
+    </div>
+  );
 }
 
 Square.propTypes = {
