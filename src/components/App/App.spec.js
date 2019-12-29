@@ -520,8 +520,14 @@ describe('<App />', () => {
       })
     })
     describe('#goTo()', () => {
+      let game;
+      beforeEach(() => {
+        game = Array(9).fill(null);
+      })
+      afterEach(() => {
+        game = null;
+      })
       it('called when <Move /> is clicked with `pastMove` index of the square', () => {
-        const game = Array(9).fill(null);
         const moveIndex = 3;
         game[moveIndex] = 'X';
         wrapper.setState({
@@ -563,6 +569,20 @@ describe('<App />', () => {
         goToButton.at(1).simulate('click');
         wentTo = wrapper.state().moves.indexOf(playedSquare);
         expect(App.prototype.goTo.lastCall.args[0], '`goTo` should be called with the next `pastMove` index').to.equal(wentTo);
+      })
+      it('reverts `moves` when called', () => {
+        const moveIndex = 3;
+        const moveIndex2 = 6;
+        game[moveIndex] = 'X';
+        game[moveIndex] = 'O';
+        wrapper.setState({
+          timeTravel: true,
+          game,
+          moves: [moveIndex, moveIndex2],
+        })
+        const goToButton = wrapper.find('.gotoButton');
+        goToButton.at(0).simulate('click');
+        expect(wrapper.state().moves, 'should revert to the first play').to.deep.equal([moveIndex]);
       })
     })
   })
