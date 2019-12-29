@@ -72,6 +72,7 @@ class App extends Component {
         game: revertedGame,
         moves: revertedMoves,
         winner,
+        timeTravel: false,
       }
     })
   }
