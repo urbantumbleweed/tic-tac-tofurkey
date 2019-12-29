@@ -373,18 +373,6 @@ describe('<App />', () => {
     it('actions container with `Time Travel` and `Clear Game` options', () => {
       expect(wrapper.find('.actions').children().length).to.be.equal(2);
     })
-    it('`Time Travel` button that when clicked toggles `timeTravel`', () => {
-      const expectedValues = [true, false, true, false];
-      expectedValues.forEach((expectedValue, index) => {
-        button.simulate('click');
-        expect(
-          wrapper.state().timeTravel,
-          `'state.timeTravel' should have toggled to ${expectedValue} after ${index + 1} 'click${index === 0 ? '' : 's'}'`)
-          .to.equal(expectedValue);
-        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', index + 1);
-      })
-      expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
-    })
     it('`Time Travel` button is denoted as `on` or `off`', () => {
       expect(button.text()).to.contain('Time Travel:');
       const expectedValues = ['off', 'on', 'off', 'on'];
@@ -627,6 +615,21 @@ describe('<App />', () => {
         const goToButton = wrapper.find('.gotoButton');
         goToButton.at(0).simulate('click');
         expect(wrapper.state().winner, '`timeTravel` should be turned off').to.be.null;
+      })
+    })
+    describe('#toggleTimeTravel()', () => {
+      it('toggles `state.timeTravel', () => {
+        const timeTravelButton = wrapper.find('.time-travel');
+        const expectedValues = [true, false, true, false];
+        expectedValues.forEach((expectedValue, index) => {
+          timeTravelButton.simulate('click');
+          expect(
+            wrapper.state().timeTravel,
+            `'state.timeTravel' should have toggled to ${expectedValue} after ${index + 1} 'click${index === 0 ? '' : 's'}'`)
+            .to.equal(expectedValue);
+          expect(App.prototype.toggleTimeTravel).to.have.property('callCount', index + 1);
+        })
+        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
       })
     })
   })
