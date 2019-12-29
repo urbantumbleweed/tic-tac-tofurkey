@@ -67,10 +67,11 @@ class App extends Component {
         newGame[square] = move % 2 === 0 ? 'X' : 'O';
         return newGame;
       }, Array(9).fill(null))
-
+      const winner = calculateWinner(revertedGame);
       return {
         game: revertedGame,
         moves: revertedMoves,
+        winner,
       }
     })
   }
