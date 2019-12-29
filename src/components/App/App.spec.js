@@ -397,16 +397,6 @@ describe('<App />', () => {
     it('actions container with `Time Travel` and `Clear Game` options', () => {
       expect(wrapper.find('.actions').children().length).to.be.equal(2);
     })
-    it('`Time Travel` button is denoted as `on` or `off`', () => {
-      expect(button.text()).to.contain('Time Travel:');
-      const expectedValues = ['off', 'on', 'off', 'on'];
-      expectedValues.forEach((suffix, i) => {
-        expect(button.text()).to.contain(suffix);
-        button.simulate('click');
-        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', i + 1);
-      })
-      expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
-    })
     it('displays a <Game /> component', () => {
       expect(Game.type(), '<Game /> is a div').to.equal('div')
     })
