@@ -3,27 +3,8 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 
 import GameContext from './GameContext';
-
-const Provider = ({ children, context }) => {
-  return (
-    <GameContext.Provider value={context}>
-      {children}
-    </GameContext.Provider>
-  );
-}
-
-class Inner extends Component {
-  render() {
-    return (<div></div>);
-  }
-}
-
-const Consumer = () => {
-  const context = useContext(GameContext);
-  return (
-    <Inner {...context} />
-  );
-}
+import Provider from '../../test/componentMocks/Provider';
+import Consumer from '../../test/componentMocks/Consumer';
 
 describe('GameContext', () => {
   it('`displayName` that is `GameContext', () => {
