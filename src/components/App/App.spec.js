@@ -1,4 +1,5 @@
 import React from 'react';
+import sampleSize from 'lodash/sampleSize';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
@@ -7,7 +8,7 @@ import { wins } from 'test/fixtures';
 import App from './index';
 import { validMessages } from './App.constants';
 import { promptMap, calculateWinner } from './App.helpers';
-import gameCombinator from 'test/gameCombinator';
+import gameCombinator, { gameTypes } from 'test/gameCombinator';
 
 const gameCombinations = gameCombinator();
 const someCompleteGames = [];
@@ -325,9 +326,32 @@ describe('<App />', () => {
         expect(wrapper.state().moves, 'the length of moves should increase after click').to.deep.equal(moves.concat([nextMove]));
         expect(wrapper.state().winner, '`state.winner` should indicate the winner').to.deep.equal('O');
       })
-      it('detects a sparse board winner')
-      it('detects a full board winner')
-      it('detects a full board tie')
+      it('detects a sparse board winner', () => {
+        sampleSize(gameTypes.sparseX, 10).forEach(game => {
+          expect(calculateWinner(game)).to.equal('X')
+        })
+        sampleSize(gameTypes.sparseO, 10).forEach(game => {
+          expect(calculateWinner(game)).to.equal('O')
+        })
+      })
+      it('detects a full board winner', () => {
+        sampleSize(gameTypes.completeX, 10).forEach(game => {
+          expect(calculateWinner(game)).to.equal('X')
+        })
+        sampleSize(gameTypes.completeO, 10).forEach(game => {
+          expect(calculateWinner(game)).to.equal('O')
+        })
+      })
+      it('detects a full board tie', () => {
+        sampleSize(gameTypes.completeTie, 10).forEach(game => {
+          expect(calculateWinner(game)).to.be.null
+        })
+      })
+      it('detects a sparse board tie', () => {
+        sampleSize(gameTypes.sparseTie, 10).forEach(game => {
+          expect(calculateWinner(game)).to.be.null
+        })
+      })
     })
   })
   describe('state', () => {
