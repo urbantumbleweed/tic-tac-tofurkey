@@ -584,6 +584,22 @@ describe('<App />', () => {
         goToButton.at(0).simulate('click');
         expect(wrapper.state().moves, 'should revert to the first play').to.deep.equal([moveIndex]);
       })
+      it('reverts `game` when called', () => {
+        const moveIndex = 3;
+        const moveIndex2 = 6;
+        game[moveIndex] = 'X';
+        game[moveIndex2] = 'O';
+        wrapper.setState({
+          timeTravel: true,
+          game: game.slice(),
+          moves: [moveIndex, moveIndex2],
+        })
+        const goToButton = wrapper.find('.gotoButton');
+        goToButton.at(0).simulate('click');
+        game = Array(9).fill(null);
+        game[moveIndex] = 'X';
+        expect(wrapper.state().game, 'should still have the earlier plays').to.deep.equal(game);
+      })
     })
   })
 })
