@@ -613,6 +613,21 @@ describe('<App />', () => {
         goToButton.at(0).simulate('click');
         expect(wrapper.state().winner, '`winner` should be recalculated').to.be.null;
       })
+      it('toggles off `timeTravel`', () => {
+        const moveIndex = 3;
+        const moveIndex2 = 6;
+        game[moveIndex] = 'X';
+        game[moveIndex] = 'O';
+        wrapper.setState({
+          timeTravel: true,
+          game,
+          moves: [moveIndex, moveIndex2],
+        })
+        expect(wrapper.state().timeTravel, '`timeTravel` should be enabled before test').to.be.true;
+        const goToButton = wrapper.find('.gotoButton');
+        goToButton.at(0).simulate('click');
+        expect(wrapper.state().winner, '`timeTravel` should be turned off').to.be.null;
+      })
     })
   })
 })
