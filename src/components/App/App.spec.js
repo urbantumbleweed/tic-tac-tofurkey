@@ -6,7 +6,7 @@ import { wins } from 'test/fixtures';
 
 import App from './index';
 import { validMessages } from './App.constants';
-import { promptMap } from './App.helpers';
+import { promptMap, calculateWinner } from './App.helpers';
 import gameCombinator from 'test/gameCombinator';
 
 const gameCombinations = gameCombinator();
@@ -396,49 +396,6 @@ describe('<App />', () => {
     it('passes a `message` to be rendered by Prompt', () => {
       expect(validMessages.includes(Prompt.text()), 'Prompt does not have a valid message').to.be.true;
     })
-    it('`Clear Game` component that when clicked, reinitializes `game` and `moves`', () => {
-      const existingGame = gameCombinations[800].slice();
-      const existingMoves = existingGame.reduce((acc, move, i) => {
-        if (move) {
-          acc.push(i);
-        }
-        return acc;
-      }, [])
-      wrapper.setState({
-        game: existingGame,
-        moves: existingMoves
-      })
-      expect(wrapper.state().game, `pre-state of 'game' should be ${existingGame.toString()}`).to.deep.equal(existingGame)
-      expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
-      ClearButton.simulate('click');
-      const { game, moves } = wrapper.state();
-      expect(game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
-      expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
-      expect(App.prototype.clearGame).to.have.property('callCount', 1)
-    })
-    it('`Clear Game` clears the `state.winner` if one is defined', () => {
-      let existingGame = someCompleteGames[0].slice();
-      const existingMoves = existingGame.reduce((acc, move, i) => {
-        if (move) {
-          acc.push(i);
-        }
-        return acc;
-      }, [])
-      wrapper.setState({
-        winner: 'X',
-        game: existingGame,
-        moves: existingMoves,
-      })
-      expect(wrapper.state().winner, `pre-state of 'winner' `).to.equal('X');
-      expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
-      expect(wrapper.state().winner, `pre-state of 'winner' should be 'X'`).to.equal('X')
-      ClearButton.simulate('click');
-      const { game, moves, winner } = wrapper.state();
-      expect(game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
-      expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
-      expect(winner, '`state.winner` should reinitialize to `null`').to.be.null;
-      expect(App.prototype.clearGame).to.have.property('callCount', 1)
-    })
     it('includes <Move /> components in its childNodes if `timeTravel` is enabled', () => {
       const [game, insert, moves] = wins.topRowX;
       const newGame = game.slice();
@@ -630,6 +587,62 @@ describe('<App />', () => {
           expect(App.prototype.toggleTimeTravel).to.have.property('callCount', index + 1);
         })
         expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
+      })
+    })
+    describe('#clearGame()', () => {
+      let existingGame;
+      let existingMoves;
+      let ClearButton;
+      beforeEach(() => {
+        ClearButton = wrapper.find('ClearGame');
+        existingGame = someCompleteGames[0].slice();
+        existingMoves = existingGame.reduce((acc, move, i) => {
+          if (move) {
+            acc.push(i);
+          }
+          return acc;
+        }, [])
+      })
+      afterEach(() => {
+        ClearButton = null;
+        existingGame = null;
+        existingMoves = null;
+      })
+      it('nullifies `state.winner`', () => {
+        wrapper.setState({
+          winner: 'X',
+          game: existingGame,
+          moves: existingMoves,
+        })
+        expect(wrapper.state().winner, `pre-state of 'winner' `).to.equal('X');
+        expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
+        expect(wrapper.state().winner, `pre-state of 'winner' should be 'X'`).to.equal('X')
+        ClearButton.simulate('click');
+        const { game, moves, winner } = wrapper.state();
+        expect(game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
+        expect(moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
+        expect(winner, '`state.winner` should reinitialize to `null`').to.be.null;
+        expect(App.prototype.clearGame).to.have.property('callCount', 1)
+      })
+      it('resets `state.game`', () => {
+        wrapper.setState({
+          game: existingGame,
+          moves: existingMoves
+        })
+        expect(wrapper.state().game, `pre-state of 'game' should be ${existingGame.toString()}`).to.deep.equal(existingGame)
+        ClearButton.simulate('click');
+        expect(wrapper.state().game, '`state.game` should reinitialize to Array of `null`s').to.deep.equal(Array(9).fill(null));
+        expect(App.prototype.clearGame).to.have.property('callCount', 1)
+      })
+      it('resets `state.moves`', () => {
+        wrapper.setState({
+          game: existingGame,
+          moves: existingMoves
+        })
+        expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
+        ClearButton.simulate('click');
+        expect(wrapper.state().moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
+        expect(App.prototype.clearGame).to.have.property('callCount', 1)
       })
     })
   })
