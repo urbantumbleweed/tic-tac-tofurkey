@@ -1,4 +1,4 @@
-import { validMessages } from '../components/App/App.constants';
+import { validMessages } from '../constants/validMessages';
 
 export function promptMap(moves, winner = null) {
   switch (true) {

@@ -6,7 +6,7 @@ import { mount } from 'enzyme';
 import { wins } from 'test/fixtures';
 
 import App from './index';
-import { validMessages } from './App.constants';
+import { validMessages } from '../../constants/validMessages';
 import { promptMap, calculateWinner } from 'helpers';
 import gameCombinator, { gameTypes } from 'test/gameCombinator';
 
