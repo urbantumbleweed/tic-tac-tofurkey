@@ -122,6 +122,12 @@ html, body, #app, .app {
   justify-content: center;
   align-items: center;
   font-weight: 200;
+  &.xValue .value {
+    color: $color4;
+  }
+  &.oValue .value {
+    color: $color1;
+  }
   &:hover {
     background-color: $color2;
   }
