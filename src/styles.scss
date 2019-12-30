@@ -89,6 +89,12 @@ html, body, #app, .app {
   height: 2rem;
   font-family: "Helvetica Neue", "Open Sans", "Sans";
   font-size: 14px;
+  &.clearButton {
+    color: $color1;
+    &:hover {
+      background-color: rgba($color1, .2);
+    }
+  }
   &.timeTravel {
     &.on {
       border: 2px solid $color4;
