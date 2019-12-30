@@ -2,13 +2,14 @@ import React, { Component, useContext } from 'react';
 import PropTypes from 'prop-types';
 import validOptions from 'src/constants/validOptions'
 import GameContext from 'contexts/GameContext';
+import { emojify } from 'helpers';
 import Move from '../Move';
 
 function Square ({ index, value }) {
   const { makeMove, timeTravel} = useContext(GameContext);
   return (
     <div className="square" onClick={() => makeMove(index)}>
-      <div className="value">{value}</div>
+      <div className="value">{emojify(value)}</div>
       {timeTravel && <Move square={index} />}
     </div>
   );
