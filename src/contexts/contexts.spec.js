@@ -1,4 +1,4 @@
-import React, { useContext, Component } from 'react';
+import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 

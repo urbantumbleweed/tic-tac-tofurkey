@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import GameContext from 'contexts/GameContext';
+import { promptMap, calculateWinner } from 'helpers';
+import 'src/styles.scss';
 import Game from '../Game';
 import Prompt from '../Prompt';
-import 'src/styles.scss';
-import { promptMap, calculateWinner } from 'helpers';
 import TimeTravelButton from '../TimeTravelButton';
 import ClearButton from '../ClearGame';
 
