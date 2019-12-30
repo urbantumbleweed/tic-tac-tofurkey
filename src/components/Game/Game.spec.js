@@ -11,8 +11,10 @@ const gameCombinations = gameCombinator();
 describe('<Game />', () => {
   let wrapper;
   let mockConsole;
+  let game;
   beforeEach(() => {
     mockConsole = mock(console);
+    game = gameCombinations[0].slice();
   })
   afterEach(() => {
     wrapper = null;
@@ -39,7 +41,7 @@ describe('<Game />', () => {
     it(' renders 9 <Square /> for all 6046 valid game combinations', function () {
       this.slow(10000)
       this.timeout(10000)
-      gameCombinations.forEach((game, gameIndex) => {
+      gameCombinations.forEach((game) => {
         wrapper = shallow(<Game game={game} />);
         const gameboard = wrapper.find('.gameboard');
         expect(gameboard.children().length).to.equal(9)
@@ -47,6 +49,15 @@ describe('<Game />', () => {
         expect(children.length, 'children of `Game` should all be of type <Square>').to.equal(9)
         wrapper.unmount();
       })
+    })
+    it('displays a <Game /> component', () => {
+      wrapper = shallow(<Game game={game} />);
+      expect(wrapper.type(), '<Game /> is a div').to.equal('div')
+    })
+    it('passes a `game` array to the Game and renders 9 children', () => {
+      wrapper = shallow(<Game game={game} />);
+      const gameProps = wrapper.props();
+      expect(gameProps.children.length, 'Game has 9 children').to.equal(9)
     })
   })
 })

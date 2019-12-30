@@ -375,21 +375,12 @@ describe('<App />', () => {
     })
   })
   describe('render', () => {
-    let button;
     let Game;
-    let Prompt
-    let ClearButton;
     beforeEach(() => {
-      button = wrapper.find('.time-travel');
       Game = wrapper.find('.gameboard');
-      Prompt = wrapper.find('.promptContainer');
-      ClearButton = wrapper.find('ClearGame');
     })
     afterEach(() => {
-      button = null;
       Game = null;
-      Prompt = null;
-      ClearButton = null;
     })
     it('<header> with fun title', () => {
       expect(wrapper.find('.appHeader').text()).to.equal('Tic Tac Tofurkey')
@@ -403,12 +394,6 @@ describe('<App />', () => {
     it('passes a `game` array to the Game and renders 9 children', () => {
       const gameProps = Game.props();
       expect(gameProps.children.length, 'Game has 9 children').to.equal(9)
-    })
-    it('displays a <Prompt /> component', () => {
-      expect(Prompt.type()).to.equal('div')
-    })
-    it('passes a `message` to be rendered by Prompt', () => {
-      expect(validMessages.includes(Prompt.text()), 'Prompt does not have a valid message').to.be.true;
     })
     it('includes <Move /> components in its childNodes if `timeTravel` is enabled', () => {
       const [game, insert, moves] = wins.topRowX;
