@@ -24,6 +24,9 @@ class App extends Component {
 
   toggleTimeTravel(e) {
     e.preventDefault();
+    if (this.state.moves.length < 1) {
+      return;
+    }
     this.setState(state => 
       ({ timeTravel: !state.timeTravel}))
   }
