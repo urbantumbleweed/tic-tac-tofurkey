@@ -589,10 +589,13 @@ describe('<App />', () => {
       })
     })
     describe('#toggleTimeTravel()', () => {
-      it('toggles `state.timeTravel', () => {
+      it('toggles `state.timeTravel`', () => {
         const timeTravelButton = wrapper.find('.timeTravel');
         const expectedValues = [true, false, true, false];
         expectedValues.forEach((expectedValue, index) => {
+          wrapper.setState({
+            moves: [1],
+          })
           timeTravelButton.simulate('click');
           expect(
             wrapper.state().timeTravel,
@@ -601,6 +604,23 @@ describe('<App />', () => {
           expect(App.prototype.toggleTimeTravel).to.have.property('callCount', index + 1);
         })
         expect(App.prototype.toggleTimeTravel).to.have.property('callCount', expectedValues.length)
+      })
+      it('toggles `state.timeTravel` only when there are moves', () => {
+        const timeTravelButton = wrapper.find('.timeTravel');
+        wrapper.setState({
+          timeTravel: false,
+          moves: [],
+        })
+        timeTravelButton.simulate('click');
+        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', 1)
+        expect(wrapper.state().timeTravel).to.be.false;
+        wrapper.setState({
+          timeTravel: false,
+          moves: [4],
+        })
+        timeTravelButton.simulate('click');
+        expect(App.prototype.toggleTimeTravel).to.have.property('callCount', 2)
+        expect(wrapper.state().timeTravel).to.be.true;
       })
     })
     describe('#clearGame()', () => {
@@ -656,6 +676,15 @@ describe('<App />', () => {
         expect(wrapper.state().moves, `pre-state of 'moves' should be ${existingMoves.toString()}`).to.deep.equal(existingMoves)
         ClearButton.simulate('click');
         expect(wrapper.state().moves, '`state.moves` should reinitialize to an empty Array').to.deep.equal([]);
+        expect(App.prototype.clearGame).to.have.property('callCount', 1)
+      })
+      it('resets `state.timeTravel', () => {
+        wrapper.setState({
+          timeTravel: true,
+        })
+        expect(wrapper.state().timeTravel, `pre-state of 'timeTravel' should be true`).to.be.true;
+        ClearButton.simulate('click');
+        expect(wrapper.state().timeTravel, '`state.timeTravel` should reinitialize to `false`').to.be.true;
         expect(App.prototype.clearGame).to.have.property('callCount', 1)
       })
     })
