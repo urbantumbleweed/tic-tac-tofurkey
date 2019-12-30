@@ -78,7 +78,6 @@ class App extends Component {
   }
 
   render() {
-    const suffix = this.state.timeTravel ? 'on' : 'off';
     const currentMove = this.state.moves.length;
     const isTurnX = currentMove % 2 === 0;
     const winner = this.state.winner;
@@ -97,7 +96,7 @@ class App extends Component {
           <Game game={this.state.game} />
         </GameContext.Provider>
         <div className="actions">
-          <TimeTravelButton onClick={this.toggleTimeTravel} suffix={suffix} />
+          <TimeTravelButton onClick={this.toggleTimeTravel} isActive={this.state.timeTravel} />
           <ClearButton onClick={this.clearGame}/>
         </div>
       </div> );

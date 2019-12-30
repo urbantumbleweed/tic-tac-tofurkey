@@ -96,10 +96,10 @@ html, body, #app, .app {
     }
   }
   &.timeTravel {
-    &.on {
+    &.isActive {
       border: 2px solid $color4;
     }
-    &:hover, &.on {
+    &:hover, &.isActive {
       background-color: rgba($color4, .2);
     }
   }
