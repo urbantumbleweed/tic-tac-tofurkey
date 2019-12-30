@@ -54,4 +54,28 @@ describe('<Square />', () => {
     wrapper = shallow(<Square key={0} value={'O'} index={0} />);
     expect(wrapper.hasClass('oValue')).to.be.true;
   })
+  it('has style when it is player X turn', () => {
+    wrapper.unmount();
+    wrapper = mount(
+      <div>
+      <GameContext.Provider value={{ isTurnX: true }}>
+        <Square index={0} value={'X'} key={0}/>
+      </GameContext.Provider>
+      </div>
+    );
+    const square = wrapper.find('.square').getElement();
+    expect(square.props.className).to.contain('isTurnX')
+  })
+  it('has style when it is player O turn', () => {
+    wrapper.unmount();
+    wrapper = mount(
+      <div>
+      <GameContext.Provider value={{ isTurnX: false }}>
+        <Square index={0} value={null} key={0}/>
+      </GameContext.Provider>
+      </div>
+    );
+    const square = wrapper.find('.square').getElement();
+    expect(square.props.className).to.contain('isTurnO')
+  })
 })
