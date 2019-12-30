@@ -116,6 +116,7 @@ html, body, #app, .app {
 }
 
 .square {
+  position: relative;
   background-color: $color2-light;
   font-size: 7rem;
   display: flex;
@@ -144,5 +145,27 @@ html, body, #app, .app {
       content: '🍞';
       color: rgba($color1, .5);
     }
+  }
+}
+
+.gotoButton {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 2px;
+  right: 2px;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  font-size: 40px;
+  padding: 5px 5px 7px;
+  border-radius: 100%;
+  border: 1px solid $color3-dark;
+  &.x {
+    background-color: $color4-light;
+  }
+  &.o {
+    background-color: $color1-light;
   }
 }
