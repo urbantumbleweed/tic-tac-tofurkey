@@ -3,23 +3,108 @@ Take Home Assessment for Gap
 
 ## Objective
 
-Create a tic-tac-toe game using BDD methodology
+Create a tic-tac-toe game using BDD methodology.  Please see the additional notes about how this was implemented.
+
+## Implementation Notes
+
+ * This was my first time using Enzyme and jsdom and my proficiency with the tools increased as I continued to make progress.  I also took this project as an opportunity to explore the use of React Context and Hooks.  I haven't used those aspects of the latest versions of React but am excited to incorporate the tools.
+ * Regarding the Build Tools. I made use of webpack aliases to make import paths simpler.
+ * I normally use css modules, but I did't want to take the time to configure that in webpack, so I just used a single scss file.
+ * I normally use prop-types, but wanted to focus on writing other tests.  I do have one example in the `<Game >` component tests and would do similar tests for all components, but in the interest of time, I didn't do it this time.
+ * And though I hand rolled all the tool configuration, I don't have a ton of experience with webpack config and using environment variables to get a production build.  I will be continuing to add that, but felt this work could be reviewed and run on the dev server.
+
 
 ## Acceptance Criteria
 
-- [ ] It must be playable
-- [ ] It must prompt the user for their turn
-- [ ] It should determine a winner or tie
-- [ ] It should allow for rewinding moves
-- [ ] The game should be resetable from UI
-- [ ] Styling should be pleasing
-- [ ] It should be composed of many small components
+- [x] It must be playable
+- [x] It must prompt the user for their turn
+- [x] It should determine a winner or tie
+- [x] It should allow for rewinding moves
+- [x] The game should be resetable from UI
+- [x] Styling should be pleasing
+- [x] It should be composed of many small components
 
 ## Tools Used
 
 - Webpack/Babel
 - Mocha/Chai/Enzyme/JSDom
 - React
+- Lodash
+
+## Folder Structure
+
+```
+.
+├── componentMocks
+│   ├── Consumer.js
+│   └── Provider.js
+├── fixtures.js
+├── gameCombinator.js
+└── setup.js
+
+1 directory, 5 files
+➜  test git:(master) ✗ cd .. 
+➜  gap-ttt git:(master) ✗ man tree
+➜  gap-ttt git:(master) ✗ tree -I node_modules
+.
+├── LICENSE
+├── README.md
+├── package.json
+├── src
+│   ├── components
+│   │   ├── App
+│   │   │   ├── App.js
+│   │   │   ├── App.spec.js
+│   │   │   └── index.js
+│   │   ├── ClearGame
+│   │   │   ├── ClearGame.js
+│   │   │   ├── ClearGame.spec.js
+│   │   │   └── index.js
+│   │   ├── Game
+│   │   │   ├── Game.js
+│   │   │   ├── Game.spec.js
+│   │   │   └── index.js
+│   │   ├── Move
+│   │   │   ├── Move.js
+│   │   │   └── index.js
+│   │   ├── Prompt
+│   │   │   ├── Prompt.js
+│   │   │   ├── Prompt.spec.js
+│   │   │   └── index.js
+│   │   ├── Square
+│   │   │   ├── Square.js
+│   │   │   ├── Square.spec.js
+│   │   │   └── index.js
+│   │   └── TimeTravelButton
+│   │       ├── TimeTravel.spec.js
+│   │       ├── TimeTravelButton.js
+│   │       └── index.js
+│   ├── constants
+│   │   ├── validMessages.js
+│   │   └── validOptions.js
+│   ├── contexts
+│   │   ├── GameContext.js
+│   │   └── contexts.spec.js
+│   ├── helpers
+│   │   ├── calculateWinner.js
+│   │   ├── emojify.js
+│   │   ├── index.js
+│   │   └── promptMap.js
+│   ├── index.html
+│   ├── index.js
+│   ├── index.spec.js
+│   └── styles.scss
+├── test
+│   ├── componentMocks
+│   │   ├── Consumer.js
+│   │   └── Provider.js
+│   ├── fixtures.js
+│   ├── gameCombinator.js
+│   └── setup.js
+├── webpack.config.js
+└── yarn.lock
+
+```
 
 ## Feature List
 
