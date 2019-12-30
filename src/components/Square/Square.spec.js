@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import Square from './Square'
 
@@ -37,5 +37,21 @@ describe('<Square />', () => {
     const valueProp = wrapper.getElement().props.value;
     expect(valueProp).to.equal('O');
     expect(wrapper.text()).to.equal(`🍞`);
+  })
+  it('displays a style when value `X` is present', () => {
+    wrapper.unmount();
+    wrapper = shallow(<Square key={0} value={null} index={0} />);
+    expect(wrapper.hasClass(`xValue`), 'should be false when null').to.be.false;
+    wrapper.unmount();
+    wrapper = shallow(<Square key={0} value={'X'} index={0} />);
+    expect(wrapper.hasClass('xValue')).to.be.true;
+  })
+  it('displays a style when value `O` is present', () => {
+    wrapper.unmount();
+    wrapper = shallow(<Square key={0} value={null} index={0} />);
+    expect(wrapper.hasClass(`xValue`), 'should be false when null').to.be.false;
+    wrapper.unmount();
+    wrapper = shallow(<Square key={0} value={'O'} index={0} />);
+    expect(wrapper.hasClass('oValue')).to.be.true;
   })
 })
