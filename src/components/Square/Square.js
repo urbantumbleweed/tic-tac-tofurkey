@@ -7,14 +7,16 @@ import { emojify } from 'helpers';
 import Move from '../Move';
 
 function Square ({ index, value }) {
-  const { makeMove, timeTravel} = useContext(GameContext);
+  const { makeMove, timeTravel, isTurnX, winner, moves } = useContext(GameContext);
   return (
     <div
       className={classnames(
         'square',
+        (isTurnX ? 'isTurnX' : 'isTurnO'), 
         {
           xValue: value === 'X',
           oValue: value === 'O',
+          gameover: winner || moves.length === 9,
         }
       )}
       onClick={() => makeMove(index)}

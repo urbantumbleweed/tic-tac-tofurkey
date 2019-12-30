@@ -129,6 +129,20 @@ html, body, #app, .app {
     color: $color1;
   }
   &:hover {
-    background-color: $color2;
+    background-color: lighten($color3-light, 5%);
+    &.isTurnX:not(.xValue):not(.oValue):not(.gameover) {
+      background-color: $color4-light;
+    }
+    &.isTurnX:not(.xValue):not(.oValue):not(.gameover) .value::before {
+      content: '🍗';
+      color: rgba($color4, .5);
+    }
+    &.isTurnO:not(.xValue):not(.oValue):not(.gameover) {
+      background-color: $color1-light;
+    }
+    &.isTurnO:not(.xValue):not(.oValue):not(.gameover) .value::before {
+      content: '🍞';
+      color: rgba($color1, .5);
+    }
   }
 }
