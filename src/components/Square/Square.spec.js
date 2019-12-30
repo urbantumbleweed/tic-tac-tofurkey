@@ -2,6 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 
 import Square from './Square'
+import GameContext from '../../contexts/GameContext';
 
 describe('<Square />', () => {
   let wrapper;
@@ -58,7 +59,7 @@ describe('<Square />', () => {
     wrapper.unmount();
     wrapper = mount(
       <div>
-      <GameContext.Provider value={{ isTurnX: true }}>
+      <GameContext.Provider value={{ isTurnX: true, moves: [] }}>
         <Square index={0} value={'X'} key={0}/>
       </GameContext.Provider>
       </div>
@@ -70,12 +71,42 @@ describe('<Square />', () => {
     wrapper.unmount();
     wrapper = mount(
       <div>
-      <GameContext.Provider value={{ isTurnX: false }}>
+      <GameContext.Provider value={{ isTurnX: false, moves: [] }}>
         <Square index={0} value={null} key={0}/>
       </GameContext.Provider>
       </div>
     );
     const square = wrapper.find('.square').getElement();
     expect(square.props.className).to.contain('isTurnO')
+  })
+  it('has style when their is a winner', () => {
+    wrapper.unmount();
+    wrapper = mount(
+      <div>
+      <GameContext.Provider value={{ isTurnX: false, winner: 'X' }}>
+        <Square index={0} value={null} key={0}/>
+      </GameContext.Provider>
+      </div>
+    );
+    const square = wrapper.find('.square').getElement();
+    expect(square.props.className).to.contain('gameover')
+  })
+  it('has style when their is a tie', () => {
+    wrapper.unmount();
+    wrapper = mount(
+      <div>
+      <GameContext.Provider 
+        value={{
+          isTurnX: false,
+          winner: null,
+          moves: [0,1,2,3,4,5,6,7,8]
+          }}
+      >
+        <Square index={0} value={null} key={0}/>
+      </GameContext.Provider>
+      </div>
+    );
+    const square = wrapper.find('.square').getElement();
+    expect(square.props.className).to.contain('gameover')
   })
 })
